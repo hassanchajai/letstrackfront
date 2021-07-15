@@ -1,0 +1,9 @@
+.sidebar-active{
+    min-width: 27%!important;
+    transition: .5s;
+}
+@media screen and (max-width: 650px) {
+    .sidebar-active{
+        min-width: 27%!important;
+    }
+  }
