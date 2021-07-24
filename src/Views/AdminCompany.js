@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 import Sidebar from "../components/AdminCompany/Sidebar";
-
+import withAdminCompany from "../HOC/withAdminCompany";
 
 const useStyles = makeStyles((t) => ({
   root: {
@@ -14,16 +14,17 @@ const useStyles = makeStyles((t) => ({
     transition: ".5s",
   },
 }));
-function AdminCompany({children}) {
+function AdminCompany({ children }) {
   const styles = useStyles();
+  
   return (
-    <div className={styles.root}>
+    
+      <div className={styles.root}>
         <Sidebar />
-        <div className={styles.content}>
-         {children}
-        </div>
-    </div>
+        <div className={styles.content}>{children}</div>
+      </div>
+   
   );
 }
 
-export default AdminCompany;
+export default withAdminCompany(AdminCompany);

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
+import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
+// import { useEffect } from "react";
+import withAdminCompany from "../../../HOC/withAdminCompany";
 // import bg from '../images/bg.jpg'
 const usestyle = makeStyles((t) => ({
   root: {
@@ -56,6 +59,8 @@ const usestyle = makeStyles((t) => ({
   link: {
     //   margin:"50px 0 0 0",
     color: "black",
+    backgroundColor:"transparent",
+    padding:"0",border:0
   },
   descriptionContent: {
     width: "60%",
@@ -73,8 +78,36 @@ const usestyle = makeStyles((t) => ({
     marginBottom: "20px",
   },
 }));
-export default function Signin() {
+
+ function Signin(props) {
   const styles = usestyle();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setError] = useState(null);
+  // use admin company context for share data
+  const invalid = email === "" || password === "";
+  const admin = useContext(AdminCompanyContext);
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    admin
+      .login(email, password)
+      .then((res) => {
+        if (res.data.token) {
+          localStorage.setItem("token", res.data.token);
+          props.history.push("/company");
+        }
+      })
+      .catch((err) => {
+        setError("Email or password incorrect");
+      });
+  };
+  // const stateEmail =
+  //     (props.location.state && props.location.state.email) || "";
+  // useEffect(() => {
+    
+  //   setEmail(stateEmail);
+  // }, [email]);
+  // setEmail(stateEmail);
   return (
     <div className={styles.root}>
       <div className={styles.signin}>
@@ -85,7 +118,7 @@ export default function Signin() {
             Get LTS PRO
           </NavLink>
         </p>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleOnSubmit}>
           <div className="mb-3 ">
             <label for="exampleFormControlInput1" className="form-label">
               Email address
@@ -95,7 +128,11 @@ export default function Signin() {
               className="form-control px-2 py-3 "
               id="exampleFormControlInput1"
               placeholder="name@example.com"
+              value={(props.location.state && props.location.state.email) || email}
+              
+              onChange={(e) => setEmail(e.target.value)}
             />
+            {/* {err && err["email"] && err.email } */}
           </div>
           <div className="mb-3">
             <label for="exampleFormControlInput1" className="form-label">
@@ -106,7 +143,10 @@ export default function Signin() {
               className="form-control px-2 py-3"
               id="exampleFormControlInput1"
               placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
             />
+            
+
           </div>
           <div className="form-check">
             <input
@@ -119,13 +159,22 @@ export default function Signin() {
               Remmeber me for 2 weeks
             </label>
           </div>
-          <button type="submit" className="btn w-100 p-3 bg-primary mb-4">
+          {err ? (
+            <p className="text-danger" style={{ fontSize: "1rem" }}>
+              {err}
+            </p>
+          ) : null}
+
+          <button
+            disabled={invalid}
+            type="submit"
+            className="btn w-100 p-3 bg-primary mb-4"
+          >
             Submit
           </button>
-          <a href="#" className={styles.link}>
-            {" "}
+          <button type="button" className={styles.link}>
             Forgot password ?
-          </a>
+          </button>
         </form>
       </div>
       {/* details */}
@@ -151,3 +200,5 @@ export default function Signin() {
     </div>
   );
 }
+
+export default withAdminCompany(Signin)

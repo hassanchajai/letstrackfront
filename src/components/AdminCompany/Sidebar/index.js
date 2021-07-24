@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 
 // import React from "react";
 import { makeStyles } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 // import img from "./img.png";
 import colors from "../../../Helpers/Colors";
 import "./style.css";
+import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
 // import colors from "../Helpers/Colors";
 const useStyles = makeStyles((t) => ({
   root: {
@@ -126,8 +127,16 @@ const useStyles = makeStyles((t) => ({
     fontSize: "1.3rem",
   },
 }));
-export default function Sidebar() {
+function Sidebar(props) {
     const styles=useStyles();
+    const admin=useContext(AdminCompanyContext);
+    const doSignOut=async ()=>{
+     //  console.log(props)
+    await admin.signout().then(res=>{
+       localStorage.removeItem("token");
+       props.history.push("/company/sign");
+     })
+     }
   return (
     
       <div className={styles.sidebar} id="sidebar">
@@ -156,10 +165,12 @@ export default function Sidebar() {
             <i className="fas fa-code"></i>
           </NavLink>
         </div>
-        <button className={styles.signout}>
+        <button className={styles.signout} onClick={doSignOut}>
           <i className="fas fa-sign-out-alt"></i>
         </button>
         
       </div>
   );
 }
+
+export default withRouter(Sidebar)

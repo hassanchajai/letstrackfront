@@ -55,42 +55,30 @@ const useStyle = makeStyles((t) => ({
     },
   },
 }));
-export default function Modal({selectItem,close}) {
+export default function Modal({ setPlan, plans, close }) {
   const styles = useStyle();
+
   return (
-    <div className={styles.root}>
-      <div className={styles.modal}>
-        <button className={styles.close + " btn bg-danger"} onClick={close}>x</button>
-        <div className={styles.card}>
-          <h2 className="mb-4">
-            Blogger <br /> Licence
-          </h2>
-          <div className={styles.cardprice}>
-            <h3>149$</h3>
-            <p className="font-italic">Per Year</p>
+    <div className={styles.root} onClick={e=>{e.stopPropagation();close();}}>
+      <div className={styles.modal} >
+        <button className={styles.close + " btn bg-danger"} onClick={close}>
+          x
+        </button>
+        {plans.map((plan) => (
+          <div className={styles.card} key={plan.id}>
+            <h2 className="mb-4">
+                   {plan.title.split(" ")[0]  }
+                   <br/>
+                   {plan.title.split(" ")[1]  }
+            </h2>
+            <div className={styles.cardprice}>
+              <h3>{plan.price}$</h3>
+              <p className="font-italic">Per Year</p>
+            </div>
+            <button className="btn bg-white" onClick={()=>setPlan(plan.id)}>Select</button>
           </div>
-          <button className="btn bg-white">Selct</button>
-        </div>
-        <div className={styles.card}>
-          <h2 className="mb-4">
-            Blogger <br /> Licence
-          </h2>
-          <div className={styles.cardprice}>
-            <h3>149$</h3>
-            <p className="font-italic">Per Year</p>
-          </div>
-          <button className="btn bg-white">Selct</button>
-        </div>
-        <div className={styles.card}>
-          <h2 className="mb-4">
-            Blogger <br /> Licence
-          </h2>
-          <div className={styles.cardprice}>
-            <h3>149$</h3>
-            <p className="font-italic">Per Year</p>
-          </div>
-          <button className="btn bg-white">Selct</button>
-        </div>
+        ))}
+
       </div>
     </div>
   );

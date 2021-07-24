@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core";
+import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
+import { withRouter } from "react-router";
 
 const useStyles = makeStyles((t) => ({
   header: {
@@ -50,12 +52,19 @@ const useStyles = makeStyles((t) => ({
     fontSize: "1.3rem",
   },
 }));
-export default function Dashboard(props) {
+ function Header(props) {
     const styles=useStyles();
     const handleToggleSidebar=()=>{
         const sidebar=document.querySelector("#sidebar");
-        // console.log(sidebar);
         sidebar.classList.toggle("sidebar-active");
+    }
+   const admin=useContext(AdminCompanyContext);
+   const doSignOut=async ()=>{
+    //  console.log(props)
+   await admin.signout().then(res=>{
+      localStorage.removeItem("token");
+      props.history.push("/company/sign");
+    })
     }
   return (
       <React.Fragment>
@@ -92,7 +101,7 @@ export default function Dashboard(props) {
                 <li>
                   <hr class="dropdown-divider" />
                 </li>
-                <li>
+                <li  onClick={doSignOut}>
                   <a className="dropdown-item text-danger" href="#">
                    Sign Out
                   </a>
@@ -111,3 +120,5 @@ export default function Dashboard(props) {
         </React.Fragment>
   );
 }
+
+export default withRouter(Header)

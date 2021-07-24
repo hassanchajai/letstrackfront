@@ -1,16 +1,9 @@
-// import { Route } from 'react-router';
 import { BrowserRouter, Route, Switch,Redirect } from "react-router-dom";
-// import Sign from "./components/Main/Sign";
-// import Tracking from "./components/Main/Tracking";
 import NotFound from "./components/NotFound";
-// import Admin from "./Views/Admin";
 import AdminCompany from "./Views/AdminCompany";
 import Delivery from "./Views/Delivery";
 import User from "./Views/User";
 import React from "react";
-// import Main from "./Views/Main";
-// import RoutesUser from "./Routes/RoutesUser";
-// import "index.css"
 import Dashboard from "./components/AdminCompany/Dashboard";
 import Tracking from "./components/Main/Tracking";
 import Users from "./components/AdminCompany/Users";
@@ -19,6 +12,7 @@ import  OrdersDelivery from "./components/Delivery/Orders";
 import Integrate from "./components/AdminCompany/integrate";
 import Signin from "./components/AdminCompany/Signin";
 import Signup from "./components/AdminCompany/Signup";
+
 
 const AppLayoutRoute = ({ Component, ...rest}) => {
   return (
@@ -70,6 +64,7 @@ function App() {
         </Switch>
       </BrowserRouter>
     </div>
+ 
   );
 }
 
