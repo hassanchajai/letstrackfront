@@ -101,7 +101,7 @@ export default function Dashboard() {
                 <div className={styles.statistiqueItemDetail}>
                   {/* statisqtique details */}
                   <div>
-                    <h3 className="mb-2">Requests</h3>
+                    <h3 className="mb-2">Completed</h3>
                     <p>{ordersState.orders.ordersCompleted}</p>
                   </div>
                   {/* icon container */}
@@ -126,7 +126,7 @@ export default function Dashboard() {
                 <div className={styles.statistiqueItemDetail}>
                   {/* statisqtique details */}
                   <div>
-                    <h3 className="mb-2">Requests</h3>
+                    <h3 className="mb-2">Process</h3>
                     <p>{ordersState.orders.ordersProcessing}</p>
                   </div>
                   {/* icon container */}
@@ -153,7 +153,7 @@ export default function Dashboard() {
                 <div className={styles.statistiqueItemDetail}>
                   {/* statisqtique details */}
                   <div>
-                    <h3 className="mb-2">Requests</h3>
+                    <h3 className="mb-2">Cancelled</h3>
                     <p>{ordersState.orders.ordersCancelled}</p>
                   </div>
                   {/* icon container */}
@@ -180,7 +180,7 @@ export default function Dashboard() {
                 <div className={styles.statistiqueItemDetail}>
                   {/* statisqtique details */}
                   <div>
-                    <h3 className="mb-2">Requests</h3>
+                    <h3 className="mb-2">En Delivery</h3>
                     <p>{ordersState.orders.ordersEnDelivery}</p>
                   </div>
                   {/* icon container */}

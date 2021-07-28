@@ -78,9 +78,9 @@ const useStyles = makeStyles((t) => ({
             <span className={styles.pagetitle}>{props.children}</span>
           </p>
           <div className={styles.userDetail}>
-            <button className={styles.btnSearch}>
+            {/* <button className={styles.btnSearch}>
               <i className="fas fa-search"></i>
-            </button>
+            </button> */}
             <div className="nav-item dropdown m-0">
               <a
                 className="nav-link dropdown-toggle m-0"

@@ -24,5 +24,34 @@ class AdminCompanyClass{
     chartdata= ()=>axios.get(this.basename+"/dashbaord/chartdata",{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
 
     // end of dashboard
+
+    // part User
+    getAllUsers=()=>axios.get(this.basename+"/users/",{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+
+    getOneUser=id=>axios.get(this.basename+"/users/"+id,{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+
+    // InsertUser=(uid,name,phone,email,image)=>axios.post(this.basename+"/users/",{uid,name,phone,email,image},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    
+    InsertUser=(data)=>axios({
+        // Endpoint to send files
+        url: this.basename+"/users/",
+        method: "POST",
+        headers: {
+          // Add any auth token here
+          authorization:`Bearer ${localStorage.getItem('token')}`,
+        },
+        
+        data: data
+      })
+    
+
+    UpdateUser=(id,name,phone,email)=>axios.put(this.basename+"/users/"+id,{name,phone,email},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    
+    DeleteUser=(id)=>axios.delete(this.basename+"/users/"+id,{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+
+    refreshUid=(id,uid)=>axios.post(this.basename+`/users/${id}/refresh`,{uid},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+
+    // end of User
+
 }
 export default AdminCompanyClass

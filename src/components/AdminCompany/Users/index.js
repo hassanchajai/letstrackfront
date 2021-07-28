@@ -1,6 +1,8 @@
-// import React from 'react'
 import { makeStyles } from "@material-ui/core";
-// import colors from "../../../Helpers/Colors";
+import React from "react";
+import { useContext, useEffect, useState } from "react";
+import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
+import ClipboardJS from "clipboard";
 import Header from "../Header";
 const useStyles = makeStyles((t) => ({
   table: {
@@ -23,26 +25,42 @@ const useStyles = makeStyles((t) => ({
     width: "100%",
     textAlign: "center",
   },
-  td: {
+  p: {
     padding: "30px",
     textAlign: "center",
     width: "100%",
     // border:"1px solid black"
   },
-
 }));
 
-export default function Users() {
+ function Users(props) {
   const styles = useStyles();
+  const [users,setUsers]=useState([]);
+  const [message,setMessage]=useState("No users yet :)");
+  const admin=useContext(AdminCompanyContext);
+  const fetchAll= async ()=>{
+   await admin.getAllUsers().then(res=>{    
+      // console.log(res.data)
+        setUsers(res.data.users);     
+    }).catch(err=>{
+      console.log(err)
+    })
+  }
+  useEffect(()=>{
+    new ClipboardJS('.get');
+    fetchAll();
+  },[]);
   return (
-    <div>
+    <React.Fragment>
       <Header icon="fas fa-user">Hereos</Header>
       <div className="py-4 px-3">
         <div className="btns d-flex justify-content-between">
-          <button className="btn bg-success p-3">
+          <button className="btn bg-success p-3" onClick={fetchAll}>
             <i className="fas fa-redo-alt"></i> Reload
           </button>
-          <button className="btn bg-primary p-3">
+          <button className="btn bg-primary p-3" onClick={()=>{
+            props.history.push("/company/users/add")
+          }}>
             <i className="fas fa-plus"></i>
           </button>
         </div>
@@ -55,39 +73,44 @@ export default function Users() {
           <div className={styles.table}>
             <div className={styles.tr}>
               <h4 className={styles.h4}>
-                Pickup Time <i className="fas fa-chevron-down text-danger"></i>
+                id <i className="fas fa-chevron-down text-danger"></i>
               </h4>
-              <h4 className={styles.h4}>Location</h4>
-              <h4 className={styles.h4}>Product</h4>
-              <h4 className={styles.h4}>Spam</h4>
-              <h4 className={styles.h4}>Order Id</h4>
-              <h4 className={styles.h4}>Order Status</h4>
+              <h4 className={styles.h4}>Name</h4>
+              <h4 className={styles.h4}>Email</h4>
+              <h4 className={styles.h4}>Link</h4>
+              <h4 className={styles.h4}>Orders</h4>
+              <h4 className={styles.h4}> Status</h4>
+              <h4 className={styles.h4}> Action</h4>
             </div>
-            <div className={styles.tr}>
-              <td className={styles.td}>2021-07-16</td>
-              <td className={styles.td}>161 lot essalam</td>
-              <td className={styles.td}>Product</td>
-
-              <td className={styles.td}>
-                <div className="p-2 w-25 m-auto rounded text-white bg-success">
-                  3
-                </div>
-              </td>
-              <td className={styles.td}>3</td>
-              <td className={styles.td}>
-                <div className="p-2  rounded text-white bg-success">
-                  Delivred
-                </div>
-              </td>
-            </div>
+           {users.length > 0 ? 
+              users.map(user=>(  <div key={user.id} className={styles.tr}>
+                <p className={styles.p}>{user.id}</p>
+                <p className={styles.p}>{user.name}</p>
+                <p className={styles.p}>{user.email}</p>
+  
+                <p className={styles.p}><button className="btn bg-blue get" data-clipboard-text={"localhost:3000/delivery/"+user.uid}>GET</button></p>
+                <p className={styles.p}>
+                  {" "}
+                  <div className="p-2 w-25 m-auto rounded text-white bg-success">
+                   {user.orders}
+                  </div>
+                </p>
+                <p className={styles.p}>
+                  <div className="p-2  rounded text-white bg-primary">Hero</div>
+                </p>
+                <p className={styles.p}><div className="p-2 m-auto rounded text-black bg-white border border-dark w-25" style={{cursor:"pointer"}} onClick={()=>{
+                  props.history.push(`users/${user.id}`);
+                }}><i className="fas fa-chevron-down"></i></div></p>
+              </div>))
+            : (<div className="mt-4"><h2>{message}</h2></div>)}
           </div>
           {/* end of table */}
-          <nav className="mt-3">
+          {/* <nav className="mt-3">
             <ul className="pagination pagination-lg">
               <li className="page-item active" aria-current="page">
                 <span className="page-link">1</span>
               </li>
-              <li className="page-item">
+               <li className="page-item">
                 <a className="page-link" href="#">
                   2
                 </a>
@@ -98,9 +121,11 @@ export default function Users() {
                 </a>
               </li>
             </ul>
-          </nav>
+          </nav> */}
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
+
+export default Users
