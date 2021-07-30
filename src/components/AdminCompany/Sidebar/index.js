@@ -24,7 +24,7 @@ const useStyles = makeStyles((t) => ({
     width: "100%",
     padding: "30px 0",
     backgroundColor: "#242A32",
-    color: "white",
+    color: colors.primary,
     textAlign: "center",
     fontWeight: "bold",
     letterSpacing: "1px",
@@ -141,7 +141,7 @@ function Sidebar(props) {
     
       <div className={styles.sidebar} id="sidebar">
         {/* sidebar header */}
-        <div className={styles.logo}>Logo</div>
+        <div className={styles.logo}>LTS</div>
         <div className={styles.sidebarItems}>
           <NavLink to="/company/dash" className={styles.sidebarItem + " nav-link"}>
             <i className="fas fa-chart-bar"></i>

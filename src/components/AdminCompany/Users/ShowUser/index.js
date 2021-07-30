@@ -14,7 +14,7 @@ const useStyles = makeStyles((t) => ({
     justifyContent: "center",
     borderRadius: "50px",
     border: "1px solid black",
-    marginBottom: "30px",
+    marginBottom: "10px",
     cursor: "pointer",
   },
 }));

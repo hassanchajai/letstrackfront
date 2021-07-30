@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import AdminCompanyContext from "../../../../DB/AdminCompany/AdminCompanyContext";
 // import BreakLine from "../../../../StyledComponents/BreakLineVertical";
 import Header from "../../Header";
+import { Tableau } from "./Tableau";
 // import {v4 as uuid} from 'uuid'
 const useStyles = makeStyles((t) => ({
   retour: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((t) => ({
     justifyContent: "center",
     borderRadius: "50px",
     border: "1px solid black",
-    marginBottom: "30px",
+    marginBottom: "10px",
     cursor: "pointer",
   },
   orderDetailTitle: {
@@ -30,18 +31,30 @@ const OrderDetail = (props) => {
   const styles = useStyles();
   const [showForm, toggleShowForm] = useState(false);
   const [order, setOrder] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [total,setTotal]=useState(0);
+  // const [loading, setLoading] = useState(false);
+  const [editform, seteditform] = useState(false);
+  const admin = useContext(AdminCompanyContext);
+  const [total, setTotal] = useState(0);
   // date
   const [date, setdate] = useState(null);
   const [hour, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
+  const [deliveries, setDeliveries] = useState([]);
+  const [idDelivery, setIdDelivery] = useState([]);
+  const [address,setAddress]=useState("");
+  const [updated,setUpdated]=useState("");
 
   // end of date
-  const toggle = () => {
-    toggleShowForm(!showForm);
-  };
-  const admin = useContext(AdminCompanyContext);
+  const showmsgUpdate=()=>{
+    setUpdated(true);
+    setTimeout(() => {
+      setUpdated(false);
+    }, 3000);
+  }
+  // const toggle = () => {
+  //   toggleShowForm(!showForm);
+  // };
+
   useEffect(() => {
     const id = props.match.params.id;
     admin
@@ -52,18 +65,45 @@ const OrderDetail = (props) => {
         // console.log(date)
         setHour(new Date(res.data.order.order_date).getHours());
         setMinute(new Date(res.data.order.order_date).getMinutes());
-        let j=0;
-        res.data.order.order_detail.forEach(item=>{
-          j+=item.price*item.qte;
+        setAddress(res.data.order.location);
+        let j = 0;
+        res.data.order.order_detail.forEach((item) => {
+          j += item.price * item.qte;
         });
         setTotal(j);
         setOrder(res.data.order);
-        
+        setIdDelivery(res.data.order.delivery.id);
       })
       .catch((err) => {
         console.log(err);
       });
+    // get deliveries
+      admin.getAllUsers().then(res=>{
+        setDeliveries(res.data.users)
+      }).catch(err=>{
+        console.log(err)
+      })
   }, []);
+  // const handleOnChangeDate= async (e)=>{
+  //   await admin.UpdateOrderDate(order.order_id).then(()=>{
+
+  //   })
+  // }
+  // const handleOnChangeDelivery=async e=> admin.UpdateOrderDelivery(order.order_id,e.target.value)
+
+  const handleOnChangeAddress=async e=> {
+     setAddress(e.target.value);
+    await admin.UpdateOrderAddress(order.order_id,e.target.value)
+  }
+ const handleOnSubmit= async e=>{
+   e.preventDefault();
+    let dt=`${date} ${hour}:${minutes}:00 `;
+    await admin.UpdateOrder(order.order_id,idDelivery,dt).then(res=>{
+      showmsgUpdate();
+    })
+  }
+  
+
   return (
     <React.Fragment>
       <Header icon="fab fa-first-order">Orders</Header>
@@ -96,7 +136,7 @@ const OrderDetail = (props) => {
                       >
                         General :
                       </p>
-                      <form className={styles.orderDetailText}>
+                      <form className={styles.orderDetailText} onSubmit={handleOnSubmit}>
                         <label className="mb-2">Date created :</label>
                         <div className="align-items-center d-flex mb-3">
                           <input
@@ -129,9 +169,16 @@ const OrderDetail = (props) => {
                       <option>En delivery</option>
                     </select> */}
                         <label className="mb-2">Delivery Man :</label>
-                        <select className="form-select mb-3">
-                          <option>{order.delivery.name}</option>
+                        <select className="form-select mb-3" onChange={e=>setIdDelivery(e.target.value)}>
+                          {
+                            deliveries.map(user=>(
+                             user.id === order.delivery.id ? <option selected  value={order.delivery.id}>{order.delivery.name}</option> : <option value={user.id}>{user.name}</option>
+                            ))
+                          }
                         </select>
+                        {updated ? (<p className="my-2 text-success">Order updated succefuly</p>) : null}
+                        <button type="submit" className="btn bg-primary w-100">Submit</button>
+
                         {/* <button className="btn bg-primary w-100">Submit</button> */}
                       </form>
                     </div>
@@ -147,25 +194,24 @@ const OrderDetail = (props) => {
                         <i
                           className="fas fa-pen"
                           style={{ cursor: "pointer" }}
+                          onClick={() => {
+                            seteditform(!editform);
+                          }}
                         ></i>
                       </div>
                       <div className={styles.orderDetailText + " lead"}>
-                        <p>{order.location}</p>
+                        {editform ? (
+                          <input
+                            type="text"
+                            className="form-control mb-2"
+                            value={address} 
+                            onChange={handleOnChangeAddress}
+                          />
+                        ) : (
+                          <p>{address}</p>
+                        )}
                         <p>{order.phone}</p>
                       </div>
-                      <form className="d-none">
-                        {/* <label className="mb-2">Status :</label>
-                    <select className="form-select mb-3">
-                      <option>All</option>
-                      <option>Process</option>
-                      <option>En delivery</option>
-                    </select> */}
-                        <label className="mb-2">Delivery Man :</label>
-                        <select className="form-select mb-3">
-                          <option>Hassan Essajai</option>
-                          <option>Test Test</option>
-                        </select>
-                      </form>
                     </div>
                     {/* <BreakLine bg="bg-secondary" height="2px"/> */}
 
@@ -180,7 +226,7 @@ const OrderDetail = (props) => {
                       <div className={styles.orderDetailText + " lead"}>
                         <p>
                           <strong className="font-weight-bold">address:</strong>{" "}
-                          {order.location}
+                          {address}
                         </p>
                       </div>
                     </div>
@@ -188,106 +234,7 @@ const OrderDetail = (props) => {
                 </div>
               </div>
               {/* end of card */}
-              {/* begin of tableau */}
-              <div className="card ">
-                <div className="card-header bg-gray">
-                  <div className="d-flex">
-                    {/* <div className="d-flex"><img src="" alt="product" width="60" height="60"/><h5>Product</h5></div>  */}
-                    <p className="w-50">Product</p>
-                    <p className="w-25">cost</p>
-                    <p className="w-25">qte</p>
-                    <p className="w-25">Total</p>
-                  </div>
-                </div>
-                {/* card body */}
-                <div className="card-body bg-white">
-                  {order.order_detail.map((item, i) => {
-                    if(order.order_detail.length===1){
-                      return (
-                        <div className="d-flex mb-3">
-                          <div className="d-flex w-50 align-items-center">
-                            <img
-                              src="https://s1.piq.land/2012/06/17/LIc7N4wKWoqpMp2ciVKH1Gzm_400x400.png"
-                              alt="product"
-                              width="50"
-                              height="50"
-                            />
-                            <p>Product</p>
-                          </div>
-                          {/* <p className="w-50">Product</p> */}
-                          <p className="w-25">{item.price}$</p>
-                          <p className="w-25">{item.qte}</p>
-                          <p className="w-25">{item.price * item.qte }$</p>
-                        </div>
-                      ); 
-                    }
-                    else{
-                      if (i === order.order_detail.length-1 ) {
-                        return (
-                          <div className="d-flex mb-3">
-                            <div className="d-flex w-50 align-items-center">
-                              <img
-                                src="https://s1.piq.land/2012/06/17/LIc7N4wKWoqpMp2ciVKH1Gzm_400x400.png"
-                                alt="product"
-                                width="50"
-                                height="50"
-                              />
-                              <p>Product</p>
-                            </div>
-                            {/* <p className="w-50">Product</p> */}
-                            <p className="w-25">{item.price}$</p>
-                          <p className="w-25">{item.qte}</p>
-                          <p className="w-25">{item.price * item.qte }$</p>
-                          </div>
-                        );
-                      }
-  
-                      return (
-                        <React.Fragment>
-                          <div className="d-flex mb-3">
-                            <div className="d-flex w-50 align-items-center">
-                              <img
-                                src="https://s1.piq.land/2012/06/17/LIc7N4wKWoqpMp2ciVKH1Gzm_400x400.png"
-                                alt="product"
-                                width="50"
-                                height="50"
-                              />
-                              <p>Product</p>
-                            </div>
-                            {/* <p className="w-50">Product</p> */}
-                            <p className="w-25">{item.price}$</p>
-                          <p className="w-25">{item.qte}</p>
-                          <p className="w-25">{item.price * item.qte }$</p>
-                          </div>
-                          <hr></hr>
-                        </React.Fragment>
-                      );
-                    }
-                
-                  })}
-                </div>
-                {/*end of card body */}
-                {/* card footer */}
-                <div className="card-footer bg-white ">
-                  {/* <p className="w-50">Product</p> */}
-                  <div className="row">
-                    <div className="col-6">
-                      <div></div>
-                    </div>
-                    <div className="col-6">
-                      <div className="d-flex justify-content-between">
-                        <p>
-                          <strong>Order Total:</strong>
-                        </p>
-                        <p>{total}$</p>
-                      </div>
-                   
-                    </div>
-                  </div>
-                </div>
-                {/*end of card footer */}
-              </div>
-              {/* end of tableau */}
+              <Tableau order={order} total={total}></Tableau>
             </div>
             <div className="col-4 mx-2 ">
               <div className="card mb-2">

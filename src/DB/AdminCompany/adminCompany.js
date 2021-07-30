@@ -56,6 +56,13 @@ class AdminCompanyClass{
     // orders
     getAllOrders=()=>axios.get(this.basename+"/orders/",{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
     getOneOrder=id=>axios.get(this.basename+"/orders/"+id,{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+
+    // UpdateOrderDate=(id,date)=>axios.put(this.basename+"/orders/"+id,{date},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+
+    UpdateOrder=(id,delivery_id,date)=>axios.put(this.basename+"/orders/"+id,{delivery_id,date},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    
+    UpdateOrderAddress=(id,shipping_address)=>axios.put(this.basename+"/orders/"+id+"/address",{shipping_address},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    
     // end of orders
 
 }
