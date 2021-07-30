@@ -14,6 +14,7 @@ import Signin from "./components/AdminCompany/Signin";
 import Signup from "./components/AdminCompany/Signup";
 import AddUser from "./components/AdminCompany/Users/AddUser";
 import ShowUser from "./components/AdminCompany/Users/ShowUser";
+import OrderDetail from "./components/AdminCompany/Orders/OrderDetail";
 
 
 const AppLayoutRoute = ({ Component, ...rest}) => {
@@ -58,6 +59,7 @@ function App() {
           <AppLayoutRoute exact path="/company/users/:user_id"  Component={ShowUser} />
 
           <AppLayoutRoute exact path="/company/orders"  Component={Orders}/>
+          <AppLayoutRoute exact path="/company/orders/:id"   Component={OrderDetail}/>
           
           <AppLayoutRoute exact path="/company/integrate"  Component={Integrate} />
           <Redirect exact path="/company" to="/company/dash" />

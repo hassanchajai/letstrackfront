@@ -8,7 +8,7 @@ import colors from "../../../Helpers/Colors";
 import Header from "../../AdminCompany/Header";
 import { useContext } from "react";
 import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
-import { format, formatDistance } from "date-fns";
+import { formatDistance } from "date-fns";
 // import colors from "../Helpers/Colors";
 const useStyles = makeStyles((t) => ({
   statistique: {
@@ -42,12 +42,15 @@ const useStyles = makeStyles((t) => ({
     color: "white",
   },
 }));
-export default function Dashboard() {
+export default function Dashboard({history}) {
   const styles = useStyles();
   const [ordersState, setOrdersState] = useState(null);
   const [lastOrders, setLastOrders] = useState(null);
   const [chartdata, setchartdata] = useState(null);
   const [loading, setloading] = useState(false);
+  const handleOnclickShow=id=>{
+    history.push("/company/orders/"+id)
+ }
   const admin = useContext(AdminCompanyContext);
   useEffect(() => {
     async function getdata() {
@@ -269,7 +272,7 @@ export default function Dashboard() {
                             )}
                           </td>
                           <td>
-                            <button className="btn btn-warning text-white">
+                            <button className="btn btn-warning text-white" onClick={()=>handleOnclickShow(order.id)}>
                               Show
                             </button>
                           </td>

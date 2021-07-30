@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import AdminCompanyContext from "../../../../DB/AdminCompany/AdminCompanyContext";
-// import AdminCompanyContext from "../../../../DB/AdminCompany/AdminCompanyContext";
 import Header from "../../Header";
 import Details from "./Details";
 import Update from "./Update";

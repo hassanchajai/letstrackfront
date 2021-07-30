@@ -53,5 +53,10 @@ class AdminCompanyClass{
 
     // end of User
 
+    // orders
+    getAllOrders=()=>axios.get(this.basename+"/orders/",{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    getOneOrder=id=>axios.get(this.basename+"/orders/"+id,{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    // end of orders
+
 }
 export default AdminCompanyClass

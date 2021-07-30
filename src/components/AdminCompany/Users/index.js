@@ -26,9 +26,10 @@ const useStyles = makeStyles((t) => ({
     textAlign: "center",
   },
   p: {
-    padding: "30px",
+    padding: "10px",
     textAlign: "center",
     width: "100%",
+    marginBottom:"0!important"
     // border:"1px solid black"
   },
 }));
@@ -88,7 +89,7 @@ const useStyles = makeStyles((t) => ({
                 <p className={styles.p}>{user.name}</p>
                 <p className={styles.p}>{user.email}</p>
   
-                <p className={styles.p}><button className="btn bg-blue get" data-clipboard-text={"localhost:3000/delivery/"+user.uid}>GET</button></p>
+                <p className={styles.p}><a className=" get" href="#" data-clipboard-text={"localhost:3000/delivery/"+user.uid}>GET</a></p>
                 <p className={styles.p}>
                   {" "}
                   <div className="p-2 w-25 m-auto rounded text-white bg-success">

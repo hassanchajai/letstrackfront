@@ -50,7 +50,7 @@ function Header() {
           <span className={styles.sublogo + " sublogo"}>LTS</span>TRACK
         </NavLink>
         <div className="d-none d-md-flex">
-          <BreakLine bg="bg-secondary" />
+          <BreakLine bg="bg-secondary" height="2px"/>
           <span>PARCEL TRACKING FOR CASH ON DELIVERY</span>
         </div>
 
