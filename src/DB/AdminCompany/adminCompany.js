@@ -54,7 +54,7 @@ class AdminCompanyClass{
     // end of User
 
     // orders
-    getAllOrders=()=>axios.get(this.basename+"/orders/",{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    getAllOrders=(status="All",delivery_id="All",phone="",date="asc")=>axios.get(this.basename+`/orders?status=${status}&delivery_id=${delivery_id}&${phone}&date=${date}&phone=${phone}`,{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
     getOneOrder=id=>axios.get(this.basename+"/orders/"+id,{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
 
     // UpdateOrderDate=(id,date)=>axios.put(this.basename+"/orders/"+id,{date},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
@@ -63,7 +63,14 @@ class AdminCompanyClass{
     
     UpdateOrderAddress=(id,shipping_address)=>axios.put(this.basename+"/orders/"+id+"/address",{shipping_address},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
     
+    UpdateOrderStatus=(id,status_id,message)=>axios.put(this.basename+"/orders/"+id+"/status",{status_id,message},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    
     // end of orders
-
+    // status
+    getAllStatus=()=>axios.get(this.basename+"/status/",{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    // end of status
+    // spams
+    spam=(type,order_id,customer_id,spam_id)=>axios.post(this.basename+"/spams/",{type,order_id,customer_id,spam_id},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    // end of spams
 }
 export default AdminCompanyClass

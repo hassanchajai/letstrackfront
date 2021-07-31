@@ -59,21 +59,35 @@ export default function Orders() {
   const styles = useStyles();
   const filter = useRef(null);
   const [orders,setOrders] = useState([]);
+  const [deliveries,setDeliveries] = useState([]);
+  const [status,setStatus] = useState([]);
+  // selected delivery
+  const [selectedDelivery,setselectedDelivery] = useState([]);
+  const [selectedStatus,setselectedStatus] = useState([]);
+
+  const [selectedDate,setselectedDate] = useState([]);
+  const [phone,setPhone] = useState([]);
+  // end of selected inputs
   const [count,setCount] = useState(null);
   const [perPage,setPerPage] = useState(5);
   const handleOnClickFilter = () => {
-    const a = (b) => (filter.current.style.height = b),
-      c = filter.current.style.height === "100%";
+    const a = (b) => (filter.current.style.height = b),c = filter.current.style.height === "100%";
     if (c) a("0px");
     else a("100%");
   };
-
-  const admin=useContext(AdminCompanyContext);
-  useEffect(()=>{
-    admin.getAllOrders().then(res=>{
+  const getOrders=(status="All",delivery_id="All",phone="",date="asc")=>{
+    admin.getAllOrders(status,delivery_id,phone,date).then(res=>{
       setOrders(res.data.orders)
       setCount(res.data.count)
     });
+  }
+  const admin=useContext(AdminCompanyContext);
+
+  useEffect(()=>{
+    getOrders();
+    admin.getAllUsers().then(res=>{setDeliveries(res.data.users)});
+    admin.getAllStatus().then(res=>{setStatus(res.data.status)});
+    // console.log(status);
   },[])
   return (
     <div>
@@ -97,35 +111,62 @@ export default function Orders() {
               className="form-control"
               type="text"
               placeholder="+2126***********"
+              onChange={
+                e=>{
+                  setPhone(e.target.value)
+                  getOrders(selectedStatus,selectedDelivery,e.target.value,selectedDate)
+                }
+              }
             />
           </div>
           <div className={styles.filtersectionElement}>
             <p>Delivery :</p>
-            <select className="form-select">
-              <option>All</option>
-              <option>Hassan Essajai</option>
-              <option>Mohammed boumlik</option>
+            <select className="form-select"   onChange={
+                e=>{
+                  setselectedDelivery(e.target.value)
+                  getOrders(selectedStatus,e.target.value,phone,selectedDate)
+                }
+              }>
+              <option value="All">All</option>
+              {
+            deliveries.map(delivery=>(<option key={delivery.id} value={delivery.id}>{delivery.name}</option>)) 
+              }
             </select>
           </div>
           <div className={styles.filtersectionElement}>
             <p>Status :</p>
-            <select className="form-select">
+            <select className="form-select"
+            onChange={
+              e=>{
+                setselectedStatus(e.target.value)
+                getOrders(e.target.value,selectedDelivery,phone,selectedDate)
+              }
+            }
+            >
               <option>All</option>
-              <option>Process</option>
-              <option>En delivery</option>
+              {
+                status.map(statu=>(<option key={statu.id} value={statu.id}>{statu.name}</option>))
+              }
             </select>
           </div>
           <div className={styles.filtersectionElement}>
             <p>Date :</p>
-            <select className="form-select">
-              <option>Desc</option>
-              <option>Asc</option>
+            <select className="form-select"
+            onChange={
+              e=>{
+                setselectedDate(e.target.value)
+                getOrders(selectedStatus,selectedDelivery,phone,e.target.value)
+              }
+            }
+            >
+              <option value="desc" selected>Desc</option>
+              <option value="asc">Asc</option>
             </select>
           </div>
         </div>
         <p className="my-3">
-          Showing <span className="text-blue">25</span> of{" "}
-          <span className="text-blue">25</span> Order
+          Showing <span className="text-blue">{count}</span> of{" "}
+          <span className="text-blue">{count}</span> Order
         </p>
         <div className="data mt-3">
           <OrderTableau styles={styles}  orders={orders}/>

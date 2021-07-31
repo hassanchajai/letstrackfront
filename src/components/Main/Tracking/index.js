@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core";
 import colors from "../../../Helpers/Colors";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { OrdersJournal } from "../../OrdersJournal";
 
 const useStyles = makeStyles((t) => {
   return {
@@ -157,9 +158,7 @@ const useStyles = makeStyles((t) => {
   };
 });
 function Tracking() {
-  AOS.init({
-    duration: 1000,
-  });
+  
   const styles = useStyles();
   return (
     <div className={styles.root + " row m-0 flex-wrap"}>
@@ -213,50 +212,7 @@ function Tracking() {
             {/* End of item */}
           </ul>
           {/* end of order status */}
-          <div>
-            <ul className={styles.listOrderShow}>
-              <li className={styles.listOrderShowItem} data-aos="fade-right">
-                <div className={styles.listOrderShowItemIcon + " bg-secondary"}>
-                  <i className="fas fa-spinner"></i>
-                </div>
-
-                <div>
-                  <h3 className="mb-2 mt-0">Status</h3>
-                  <p>Message</p>
-                </div>
-                <div className={styles.listDetailsItemMessage}>
-                  <p className="text-danger">Message</p>
-                </div>
-              </li>
-              {/* end of list item */}
-              <li className={styles.listOrderShowItem} data-aos="fade-right">
-                <div className={styles.listOrderShowItemIcon + " bg-success"}>
-                  <i className="fas fa-check"></i>
-                </div>
-                <div>
-                  <h3 className="mb-2 mt-0">Status</h3>
-                  <p>Message</p>
-                </div>
-                <div className={styles.listDetailsItemMessage}>
-                  <p className="text-success">Message</p>
-                </div>
-              </li>
-              {/* end of list item */}
-              <li className={styles.listOrderShowItem} data-aos="fade-right">
-                <div className={styles.listOrderShowItemIcon + " bg-primary"}>
-                  <i className="fas fa-exclamation-triangle"></i>
-                </div>
-                <div>
-                  <h3 className="mb-2 mt-0">Status</h3>
-                  <p>Message</p>
-                </div>
-                <div className={styles.listDetailsItemMessage}>
-                  <p className="text-primary">Message</p>
-                </div>
-              </li>
-              {/* end of list item */}
-            </ul>
-          </div>
+    <OrdersJournal></OrdersJournal>
           {/* section for details */}
           <div></div>
 
