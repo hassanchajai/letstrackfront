@@ -3,6 +3,8 @@ const colors={
     success:"#A6D1AA",
     danger:"#F79E86",
     light:"#EFEBE5",
-    black:"#fff"
+    black:"#000",
+    gray:"#F4F4F5",
+    blue:"#8DB4DD"
 };
 export default colors

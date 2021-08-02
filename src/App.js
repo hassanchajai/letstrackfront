@@ -27,9 +27,10 @@ const AppLayoutRoute = ({ Component, ...rest}) => {
   )
 };
 const UserRouteLayout=({Component,...rest})=>{
+
 return (
 <Route  {...rest} render={matchProps=>(<User>
-  <Component {...matchProps} />
+  <Component {...matchProps}  />
 </User>)}/>
 )
 }

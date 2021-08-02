@@ -212,7 +212,7 @@ function Tracking() {
             {/* End of item */}
           </ul>
           {/* end of order status */}
-    <OrdersJournal></OrdersJournal>
+    <OrdersJournal journals={JSON.parse('[{"id":1,"message":"HEY","statu":"Processing","created_at":"2021-08-02T09:11:03.000000Z"},{"id":2,"message":"in process","statu":"Processing","created_at":"2021-08-02T09:14:01.000000Z"},{"id":3,"message":"mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage","statu":"Processing","created_at":"2021-08-02T09:14:37.000000Z"},{"id":4,"message":"mesag","statu":"Completed","created_at":"2021-08-02T09:53:34.000000Z"}]')}></OrdersJournal>
           {/* section for details */}
           <div></div>
 

@@ -18,7 +18,6 @@ function AdminCompany({ children }) {
   const styles = useStyles();
   
   return (
-    
       <div className={styles.root}>
         <Sidebar />
         <div className={styles.content}>{children}</div>

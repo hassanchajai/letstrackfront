@@ -186,16 +186,18 @@ const OrderDetail = (props) => {
                             className="form-control d-block-line w-25"
                             type="number"
                             min="1"
-                            max="24"
+                            max="23"
                             value={hour}
                             onChange={(e) => setHour(e.target.value)}
                           />{" "}
                           -
                           <input
                             className="form-control d-block-line w-25"
-                            type="text"
+                            type="number"
                             value={minutes}
                             onChange={(e) => setMinute(e.target.value)}
+                            min="1"
+                            max="59"
                           />
                         </div>
                         {/* <label className="mb-2">Status :</label>
@@ -291,7 +293,7 @@ const OrderDetail = (props) => {
                   Orders Journal
                 </div>
                 <div className="card-body bg-gray">
-                  <OrdersJournal/>
+                  <OrdersJournal journals={order.order_journal}/>
                 </div>
               </div>
             </div>
