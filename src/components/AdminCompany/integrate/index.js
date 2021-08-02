@@ -42,9 +42,9 @@ const useStyles = makeStyles((t) => ({
     "&:hover": {
       backgroundColor: colors.gray,
     },
-    "& .active":{
+    "& .active": {
       backgroundColor: colors.gray,
-    }
+    },
   },
   endpointsMethod: {
     padding: "8px",
@@ -59,14 +59,15 @@ const useStyles = makeStyles((t) => ({
   },
   header: {
     backgroundColor: colors.gray,
+    padding: "10px",
   },
-  body:{
-      padding:"30px"
+  body: {
+    padding: "30px",
   },
-  titleInput:{
-      fontSize:"1.3rem",
-      fontWeight:"500"
-  }
+  titleInput: {
+    fontSize: "1.3rem",
+    fontWeight: "500",
+  },
 }));
 export default function Integrate() {
   const styles = useStyles();
@@ -106,12 +107,31 @@ export default function Integrate() {
               {/* end of header */}
               <div className={styles.body}>
                 <form>
-                    <label className={"mb-3 "+styles.titleInput}>LtsAPI APP :</label>
-                    <select  className="form-select" >
-                        <option>
-                            Lts Default Application 3360#2021
-                        </option>
-                    </select>
+                  <label className={"mb-3 " + styles.titleInput}>
+                    LtsAPI APP :
+                  </label>
+                  <select className="form-select">
+                    <option>Lts Default Application 3360#2021</option>
+                  </select>
+                </form>
+              </div>
+              {/* end of body */}
+            </div>
+            <div className={styles.parametresitem}>
+              <div className={styles.header}>
+                <h5>Headers Parameter</h5>
+              </div>
+              {/* end of header */}
+              <div className={styles.body}>
+                <form>
+                  <label className={"mb-3 " + styles.titleInput}>
+                    API Key :
+                  </label>
+                  <input className="form-control mb-3" type="text" value="HJGCDZHGV121E32N?V12UYKGZDYI232842$"  readOnly />
+                  <label className={"mb-3 " + styles.titleInput}>
+                    API HOST :
+                  </label>
+                  <input className="form-control" type="text" value="https://onlinestore.com"  readOnly />
                 </form>
               </div>
               {/* end of body */}
