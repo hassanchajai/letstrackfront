@@ -54,7 +54,7 @@ class AdminCompanyClass{
     // end of User
 
     // orders
-    getAllOrders=(status="All",delivery_id="All",phone="",date="asc")=>axios.get(this.basename+`/orders?status=${status}&delivery_id=${delivery_id}&${phone}&date=${date}&phone=${phone}`,{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    getAllOrders=(status="All",delivery_id="All",phone="",date="desc")=>axios.get(this.basename+`/orders?status=${status}&delivery_id=${delivery_id}&${phone}&date=${date}&phone=${phone}`,{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
     getOneOrder=id=>axios.get(this.basename+"/orders/"+id,{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
 
     // UpdateOrderDate=(id,date)=>axios.put(this.basename+"/orders/"+id,{date},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
@@ -72,5 +72,8 @@ class AdminCompanyClass{
     // spams
     spam=(type,order_id,customer_id,spam_id)=>axios.post(this.basename+"/spams/",{type,order_id,customer_id,spam_id},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
     // end of spams
+    // get snippetes
+    getSnippets=()=>axios.get(this.basename+"/company_space/",{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    // end of snippet
 }
 export default AdminCompanyClass

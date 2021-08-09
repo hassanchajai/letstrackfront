@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
-import AdminCompanyContext from "../../../../../DB/AdminCompany/AdminCompanyContext";
+import AdminCompanyContext from "../../../../../../DB/AdminCompany/AdminCompanyContext";
 import {v4 as uuid} from 'uuid'
 import { withRouter } from "react-router";
 const useStyles = makeStyles((t) => ({
@@ -38,10 +38,8 @@ const AddUser = ({user,close,history}) => {
   const handleOnSubmit =async (e) => {
     e.preventDefault();
   await  admin.UpdateUser(id,name,phone,email).then(res=>{
-    history.push("/company/users"); 
-  }).catch(err=>{
-    setErrors(err);
-
+    if(!res.data.errors)history.push("/company/users"); 
+    setErrors(res.data.errors)
   })
   // console.log(errors)
   };
@@ -68,6 +66,9 @@ const AddUser = ({user,close,history}) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+           {!(errors && errors.name) ? null : (
+              <div className="text-danger my-3">{errors.name}</div>
+            )}
         </div>
         <div className="mb-4">
           <label for="exampleFormControlInput1" className="form-label">
@@ -82,6 +83,9 @@ const AddUser = ({user,close,history}) => {
 
             onChange={(e) => setEmail(e.target.value)}
           />
+              {!(errors && errors.email) ? null : (
+              <div className="text-danger my-3">{errors.email}</div>
+            )}
         </div>
         <div className="mb-4">
           <label for="exampleFormControlInput1" className="form-label">
@@ -96,6 +100,9 @@ const AddUser = ({user,close,history}) => {
 
             onChange={(e) => setPhone(e.target.value)}
           />
+              {!(errors && errors.phone) ? null : (
+              <div className="text-danger my-3">{errors.phone}</div>
+            )}
         </div>
         <div className="mb-4">
           {/* <label for="exampleFormControlInput1" className="form-label">

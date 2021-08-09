@@ -1,5 +1,5 @@
 import { colors, makeStyles } from "@material-ui/core";
-import Aos from "aos";
+// import Aos from "aos";
 import React from "react";
 import { Item } from "./Item";
 const useStyles = makeStyles((t) => {
@@ -96,16 +96,13 @@ const useStyles = makeStyles((t) => {
   };
 });
 
-export const OrdersJournal = ({ journals }) => {
-  Aos.init({
-    duration: 1000,
-  });
+export const OrdersJournal = ({ journals,apply }) => {
   const styles = useStyles();
   return (
     <div>
       <ul className={styles.listOrderShow}>
         {journals.map((item) => (
-          <Item styles={styles} item={item} key={item.id}/>
+          <Item styles={styles} item={item} key={item.id} apply={apply}/>
         ))}
       </ul>
     </div>

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core";
 import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
 import { withRouter } from "react-router";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((t) => ({
   header: {
@@ -94,15 +95,15 @@ const useStyles = makeStyles((t) => ({
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <NavLink className="dropdown-item" to="/company/profil">
                     Profile
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
                   <hr class="dropdown-divider" />
                 </li>
                 <li  onClick={doSignOut}>
-                  <a className="dropdown-item text-danger" href="#">
+                  <a className="dropdown-item text-danger">
                    Sign Out
                   </a>
                 </li>

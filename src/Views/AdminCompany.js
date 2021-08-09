@@ -5,13 +5,14 @@ import withAdminCompany from "../HOC/withAdminCompany";
 
 const useStyles = makeStyles((t) => ({
   root: {
-    minHeight: "100vh",
     display: "flex",
   },
   content: {
     position: "relative",
     width: "100%",
     transition: ".5s",
+    overflowY:"scroll",
+    height:"100vh"
   },
 }));
 function AdminCompany({ children }) {

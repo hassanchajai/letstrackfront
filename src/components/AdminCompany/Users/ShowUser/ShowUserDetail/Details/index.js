@@ -2,9 +2,10 @@ import { makeStyles } from "@material-ui/core";
 import formatDistance from "date-fns/formatDistance";
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
-import AdminCompanyContext from "../../../../../DB/AdminCompany/AdminCompanyContext";
-import colors from "../../../../../Helpers/Colors";
+import AdminCompanyContext from "../../../../../../DB/AdminCompany/AdminCompanyContext";
+import colors from "../../../../../../Helpers/Colors";
 import { v4 as uid } from "uuid";
+import { getBadge } from "../../../../../../Helpers/getBadge";
 const useStyles = makeStyles((t) => ({
   statistique: {
     display: "flex",
@@ -146,7 +147,7 @@ const Details = ({ open, user, statistique, history }) => {
               height="100"
               className="mt-3"
             />
-            <p>Hero</p>
+            <p>{getBadge(user.ordersCounter)}</p>
           </div>
           <div class="col-md-8">
             <div class="card-body">

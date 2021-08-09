@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
-import AdminCompanyContext from "../../../../DB/AdminCompany/AdminCompanyContext";
+import AdminCompanyContext from "../../../../DB/AdminCompany/AdminCompanyContext"; 
 import Header from "../../Header";
-import Details from "./Details";
-import Update from "./Update";
+import  ShowUserDetail  from "./ShowUserDetail";
+
 // import {v4 as uuid} from 'uuid'
 const useStyles = makeStyles((t) => ({
   retour: {
@@ -57,29 +57,7 @@ const ShowUser = (props) => {
           <i className="fas fa-arrow-left"></i>
         </div>
 
-        {loading ? (
-          <div>
-            {" "}
-            <div className="d-flex justify-content-between align-items-center">
-              <h2 className="mb-3">{user.name} <button className="btn bg-blue get" data-clipboard-text={"localhost:3000/delivery/"+user.uid}>GET</button></h2>
-
-              {/* <p>32 order</p> */}
-              <div className=" py-3 px-5   rounded text-white bg-primary">
-                Hero
-              </div>
-            </div>
-            <hr></hr>
-            {showForm ? (
-              <Update close={toggle} user={user} />
-            ) : (
-              <Details open={toggle} user={user} statistique={statistique} />
-            )}
-          </div>
-        ) : (
-          <div class="spinner-border text-warning" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        )}
+      <ShowUserDetail user={user} loading={loading} statistique={statistique} toggle={toggle} showForm={showForm}/>
       </div>
     </React.Fragment>
   );

@@ -1,7 +1,7 @@
 import React from 'react'
 import OrderItem from '../OrderItem'
 
- const OrderTableau = ({styles,orders}) => {
+ const OrderTableau = ({styles,orders,loading}) => {
     //  console.log(orders)
     return (
         <div className={styles.table}>
@@ -14,7 +14,7 @@ import OrderItem from '../OrderItem'
             <h4 className={styles.h4}>Action</h4>
         </div>
 
-     {!orders ? null :  orders.map(order=><OrderItem styles={styles} order={order}  key={order.order_id}/>) } 
+     {!orders ? null :  orders.map(order=><OrderItem styles={styles} order={order}  key={order.order_id} loading={loading}/>) } 
     
     </div>
     )

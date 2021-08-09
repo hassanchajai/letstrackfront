@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
 import colors from "../../../Helpers/Colors";
-import AOS from "aos";
 import "aos/dist/aos.css";
 import { OrdersJournal } from "../../OrdersJournal";
+import Aos from "aos";
 
 const useStyles = makeStyles((t) => {
   return {
@@ -158,7 +158,11 @@ const useStyles = makeStyles((t) => {
   };
 });
 function Tracking() {
-  
+  useEffect(()=>{
+    Aos.init({
+      duration: 1000,
+    });
+  },[])
   const styles = useStyles();
   return (
     <div className={styles.root + " row m-0 flex-wrap"}>
@@ -212,7 +216,7 @@ function Tracking() {
             {/* End of item */}
           </ul>
           {/* end of order status */}
-    <OrdersJournal journals={JSON.parse('[{"id":1,"message":"HEY","statu":"Processing","created_at":"2021-08-02T09:11:03.000000Z"},{"id":2,"message":"in process","statu":"Processing","created_at":"2021-08-02T09:14:01.000000Z"},{"id":3,"message":"mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage","statu":"Processing","created_at":"2021-08-02T09:14:37.000000Z"},{"id":4,"message":"mesag","statu":"Completed","created_at":"2021-08-02T09:53:34.000000Z"}]')}></OrdersJournal>
+    <OrdersJournal apply={true} journals={JSON.parse('[{"id":1,"message":"HEY","statu":"Processing","created_at":"2021-08-02T09:11:03.000000Z"},{"id":2,"message":"in process","statu":"Processing","created_at":"2021-08-02T09:14:01.000000Z"},{"id":3,"message":"mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage","statu":"Processing","created_at":"2021-08-02T09:14:37.000000Z"},{"id":4,"message":"mesag","statu":"Completed","created_at":"2021-08-02T09:53:34.000000Z"}]')}></OrdersJournal>
           {/* section for details */}
           <div></div>
 

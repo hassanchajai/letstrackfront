@@ -3,7 +3,7 @@ import NotFound from "./components/NotFound";
 import AdminCompany from "./Views/AdminCompany";
 import Delivery from "./Views/Delivery";
 import User from "./Views/User";
-import React from "react";
+import React, { useEffect } from "react";
 import Dashboard from "./components/AdminCompany/Dashboard";
 import Tracking from "./components/Main/Tracking";
 import Users from "./components/AdminCompany/Users";
@@ -15,6 +15,10 @@ import Signup from "./components/AdminCompany/Signup";
 import AddUser from "./components/AdminCompany/Users/AddUser";
 import ShowUser from "./components/AdminCompany/Users/ShowUser";
 import OrderDetail from "./components/AdminCompany/Orders/OrderDetail";
+import Profil from "./components/AdminCompany/Profil";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import axios from "axios";
 
 
 const AppLayoutRoute = ({ Component, ...rest}) => {
@@ -42,6 +46,29 @@ const DeliveryRouteLayout=({Component,...rest})=>{
   )
   }
 function App() {
+  useEffect(()=>{
+    /* first you should install axios
+with the command
+npm install axios@latest */
+
+fetch('http://127.0.0.1:8000/api/company/methods/add',{
+  method:'POST',
+  headers:{
+   'api_key':'3bf584a38a18ade7cc50cc0c6f0ca8ecfcf',
+    'api_host':'host',
+    },
+  body:JSON.stringify({
+    product_name:'product',
+     price:'product',
+     qte:'1',
+     shipping_address:'address',
+     phone:'0000000000'
+    })
+  })
+ .then(data=>data.json())
+ .then(res=>console.log(res))
+  
+  },[]);
   return (
     <div className="App">
       <BrowserRouter>
@@ -59,10 +86,13 @@ function App() {
           <AppLayoutRoute exact path="/company/users/add"  Component={AddUser} />
           <AppLayoutRoute exact path="/company/users/:user_id"  Component={ShowUser} />
 
+          <AppLayoutRoute exact path="/company/profil"  Component={Profil}/>
+
           <AppLayoutRoute exact path="/company/orders"  Component={Orders}/>
           <AppLayoutRoute exact path="/company/orders/:id"   Component={OrderDetail}/>
           
           <AppLayoutRoute exact path="/company/integrate"  Component={Integrate} />
+          {/* <AppLayoutRoute exact path="/company/integrate/:method"  Component={Integrate} /> */}
           <Redirect exact path="/company" to="/company/dash" />
           {/* part delivery */}
           <DeliveryRouteLayout exact path="/delivery/:delivery_id" Component={OrdersDelivery}/>
@@ -74,6 +104,9 @@ function App() {
           <Route exact component={NotFound} />
         </Switch>
       </BrowserRouter>
+      <ToastContainer position="top-center"
+autoClose={5000}
+hideProgressBar={false}/>
     </div>
  
   );

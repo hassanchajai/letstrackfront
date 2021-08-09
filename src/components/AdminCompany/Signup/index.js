@@ -149,17 +149,20 @@ const usestyle = makeStyles((t) => ({
     admin
       .register(email, password, firstname, lastname, "logo", SelectedPlan + 1)
       .then((res) => {
-        console.log(res);
-        props.history.push({
+        // console.log(res);
+        if(!res.data.errors){
+              props.history.push({
           pathname: "/company/sign",
           state: {
             email: res.data.user.email,
           },
         });
+
+        }
+        setErrors(res.data.errors);
+    
       })
-      .catch((err) => {
-        setErrors(err);
-      });
+     
   };
   const styles = usestyle();
   return (
@@ -183,8 +186,12 @@ const usestyle = makeStyles((t) => ({
               className="form-control px-2 py-3 "
               id="exampleFormControlInput1"
               placeholder="First Name"
+              onChang
               onChange={(e) => setFirstname(e.target.value)}
             />
+              {/* {!(errors && errors.firstname) ? null : (
+              <div className="text-danger my-3">{errors.firstname}</div>
+            )} */}
           </div>
           <div className="mb-3 ">
             <label for="exampleFormControlInput1" className="form-label">
@@ -198,6 +205,9 @@ const usestyle = makeStyles((t) => ({
               placeholder="Last Name"
               onChange={(e) => setLastname(e.target.value)}
             />
+              {!(errors && errors.lastname) ? null : (
+              <div className="text-danger my-3">{errors.lastname}</div>
+            )}
           </div>
           <div className="mb-3 ">
             <label for="exampleFormControlInput1" className="form-label">
@@ -212,6 +222,9 @@ const usestyle = makeStyles((t) => ({
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+          {!(errors && errors.email) ? null : (
+              <div className="text-danger my-3">{errors.email}</div>
+            )}
           <div className="mb-3">
             <label for="exampleFormControlInput1" className="form-label">
               Password
@@ -224,7 +237,11 @@ const usestyle = makeStyles((t) => ({
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
+              {!(errors && errors.password) ? null : (
+              <div className="text-danger my-3">{errors.password}</div>
+            )}
           </div>
+
           <div className="mb-3">
             <label for="exampleFormControlInput1" className="form-label">
               Confirm Password

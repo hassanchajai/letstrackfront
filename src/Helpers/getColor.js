@@ -11,8 +11,8 @@ export const getColor=statu=>{
             color="success";
             break;
         }
-        case "Call Soon" :{
-            color="primary";
+        case "En Delivery" :{
+            color="blue";
             break;
         }
         default:{

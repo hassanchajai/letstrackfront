@@ -10,7 +10,7 @@ import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
 // import colors from "../Helpers/Colors";
 const useStyles = makeStyles((t) => ({
   root: {
-    minHeight: "100vh",
+    // height: "100vh",
     display: "flex",
   },
   sidebar: {
@@ -19,6 +19,7 @@ const useStyles = makeStyles((t) => ({
     overflow: "hidden",
     width: "7%",
     transition: ".5s",
+    height:"100vh"
   },
   logo: {
     width: "100%",

@@ -1,11 +1,18 @@
-// import React from 'react'
 import { makeStyles } from "@material-ui/core";
 import colors from "../../../Helpers/Colors";
 import Header from "../Header";
+// import hljs from "highlight.js";
+import 'highlight.js/styles/github.css';
+import { useContext, useEffect, useState } from "react";
+import { ListMethods } from "./ListMethods";
+import { MethodDetail } from "./MethodDetail";
+import { SnippetCode } from "./SnippetCode";
+import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
+import React from "react";
 const useStyles = makeStyles((t) => ({
   root: {
-    backgroundColor: "#fff",
     minHeight: "calc( 100vh - 84px )",
+    borderTop:"1px solid black"
   },
   inputSearch: {
     margin: "0",
@@ -32,6 +39,7 @@ const useStyles = makeStyles((t) => ({
   endpointsListItem: {
     display: "flex",
     alignItems: "center",
+    cursor:"pointer",
     // backgroundColor:colors.gray,
     justifyContent: "",
     padding: "10px 30px",
@@ -42,7 +50,7 @@ const useStyles = makeStyles((t) => ({
     "&:hover": {
       backgroundColor: colors.gray,
     },
-    "& .active": {
+    "&.active": {
       backgroundColor: colors.gray,
     },
   },
@@ -69,80 +77,56 @@ const useStyles = makeStyles((t) => ({
     fontWeight: "500",
   },
 }));
+
 export default function Integrate() {
   const styles = useStyles();
+  const [methods,setMethods]=useState(null);
+  const [selectedMethod,setSelectedMethod]=useState(0);
+  const admin=useContext(AdminCompanyContext);
+
+  useEffect(()=>{
+    admin.getSnippets().then(res=>setMethods(res.data))
+    // setMethods(endpoints);
+  },[]);
   return (
-    <div>
+    <React.Fragment>
       <Header icon="fas fa-code">Integrate</Header>
+ {
+    methods ? (  <div>
+      
       <div className={styles.root}>
         {/* content */}
-        <div className="d-flex">
+        <div className="d-flex min-height-100">
           {/* col 1 */}
           <div className={"col-3 " + styles.endpoints}>
             {/* input search */}
-            <div className={styles.inputSearch}>
+            <div className={styles.inputSearch+" d-none"}>
               <input
                 className={"form-control " + styles.input}
                 placeholder="search endpoint"
               />
               <i className={"fas fa-search " + styles.icon} />
             </div>
+            <div className={styles.inputSearch}>
+              <h5>List of methods</h5>
+            </div>
             {/* end of input search */}
-            <ul className={styles.endpointsList}>
-              <li className={styles.endpointsListItem}>
-                <p className={styles.endpointsMethod}>POST</p>
-                <p className={styles.endpointsName}>Add an Order</p>
-              </li>
-            </ul>
+            <ListMethods  styles={styles} setSelectedMethod={setSelectedMethod} selectedMethod={selectedMethod} methods={methods.methods}/>
           </div>
           {/* col 2 */}
-          <div className={"col-5 " + styles.parametres}>
-            <div className={styles.parametresitem}>
-              <div className={styles.header}>
-                <div className="d-flex p-2 align-items-center">
-                  <p className={styles.endpointsMethod}>POST</p>
-                  <h5 className={styles.endpointsName}>Add an Order</h5>
-                </div>
-              </div>
-              {/* end of header */}
-              <div className={styles.body}>
-                <form>
-                  <label className={"mb-3 " + styles.titleInput}>
-                    LtsAPI APP :
-                  </label>
-                  <select className="form-select">
-                    <option>Lts Default Application 3360#2021</option>
-                  </select>
-                </form>
-              </div>
-              {/* end of body */}
-            </div>
-            <div className={styles.parametresitem}>
-              <div className={styles.header}>
-                <h5>Headers Parameter</h5>
-              </div>
-              {/* end of header */}
-              <div className={styles.body}>
-                <form>
-                  <label className={"mb-3 " + styles.titleInput}>
-                    API Key :
-                  </label>
-                  <input className="form-control mb-3" type="text" value="HJGCDZHGV121E32N?V12UYKGZDYI232842$"  readOnly />
-                  <label className={"mb-3 " + styles.titleInput}>
-                    API HOST :
-                  </label>
-                  <input className="form-control" type="text" value="https://onlinestore.com"  readOnly />
-                </form>
-              </div>
-              {/* end of body */}
-            </div>
-          </div>
-          {/* col 3 */}
-          <div className="col-4"></div>
-        </div>
+          <MethodDetail  styles={styles} CurrentMethod={methods.methods[selectedMethod]} App={methods.name}/>
+        {/* col 3 */}
+        <SnippetCode  styles={styles} CurrentMethod={methods.methods[selectedMethod]}/>
+       </div>
 
         {/* end of content */}
       </div>
-    </div>
+    </div>) : (<div className="min-height-100 d-flex justify-content-center align-items-center"><div class="spinner-border text-primary display-4" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div></div>)
+  }
+    </React.Fragment>
+ 
+
   );
 }

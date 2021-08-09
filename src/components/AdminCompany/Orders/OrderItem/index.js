@@ -1,6 +1,7 @@
 import formatDistance from 'date-fns/formatDistance'
 import React from 'react'
 import { withRouter } from 'react-router'
+import withloading from '../../../../HOC/WithLoading'
 
  const OrderItem=({styles,history,order})=> {
      const handleOnclickShow=id=>{
@@ -10,6 +11,7 @@ import { withRouter } from 'react-router'
    let color="success";
    if(status==="Processing")color="primary";
    if(status==="Cancelled")color="danger";
+   if(status==="En Delivery")color="blue";
     return (
               <div className={styles.tr}>
                        <p className={styles.p}>{formatDistance(new Date(order.pickup),new Date(),{addSuffix:true})}</p>
@@ -21,4 +23,4 @@ import { withRouter } from 'react-router'
                     </div>
     )
 }
-export default withRouter(OrderItem)
+export default withloading(withRouter(OrderItem))

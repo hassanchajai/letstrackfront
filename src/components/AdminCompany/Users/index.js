@@ -4,6 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
 import ClipboardJS from "clipboard";
 import Header from "../Header";
+import { toast } from "react-toastify";
+import { getBadge } from "../../../Helpers/getBadge";
 const useStyles = makeStyles((t) => ({
   table: {
     width: "100%",
@@ -41,7 +43,6 @@ const useStyles = makeStyles((t) => ({
   const admin=useContext(AdminCompanyContext);
   const fetchAll= async ()=>{
    await admin.getAllUsers().then(res=>{    
-      // console.log(res.data)
         setUsers(res.data.users);     
     }).catch(err=>{
       console.log(err)
@@ -89,7 +90,7 @@ const useStyles = makeStyles((t) => ({
                 <p className={styles.p}>{user.name}</p>
                 <p className={styles.p}>{user.email}</p>
   
-                <p className={styles.p}><a className=" get" href="#" data-clipboard-text={"localhost:3000/delivery/"+user.uid}>GET</a></p>
+                <p className={styles.p}><a className=" get" href="#" onClick={()=>toast("link has copied")} data-clipboard-text={"localhost:3000/delivery/"+user.uid}>GET</a></p>
                 <p className={styles.p}>
                   {" "}
                   <div className="p-2 w-25 m-auto rounded text-white bg-success">
@@ -97,7 +98,7 @@ const useStyles = makeStyles((t) => ({
                   </div>
                 </p>
                 <p className={styles.p}>
-                  <div className="p-2  rounded text-white bg-primary">Hero</div>
+                  <div className="p-2  rounded text-white bg-primary">{getBadge(user.orders)}</div>
                 </p>
                 <p className={styles.p}><div className="p-2 m-auto rounded text-black bg-white border border-dark w-25" style={{cursor:"pointer"}} onClick={()=>{
                   props.history.push(`users/${user.id}`);

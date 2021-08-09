@@ -8,8 +8,8 @@ import { OrdersJournal } from "../../../OrdersJournal";
 // import BreakLine from "../../../../StyledComponents/BreakLineVertical";
 import Header from "../../Header";
 import { Tableau } from "./Tableau";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
 // import {v4 as uuid} from 'uuid'
 const useStyles = makeStyles((t) => ({
   retour: {
@@ -45,19 +45,20 @@ const OrderDetail = (props) => {
   const [hour, setHour] = useState(null);
   const [minutes, setMinute] = useState(null);
   const [deliveries, setDeliveries] = useState([]);
-  const [idDelivery, setIdDelivery] = useState([]);
+  const [idDelivery, setIdDelivery] = useState(0);
   const [address, setAddress] = useState("");
   const [spamChecked, setSpamChecked] = useState(false);
   const [updated, setUpdated] = useState("");
   const [message, setMessage] = useState("");
-  const textarea=useRef();
+  const textarea = useRef();
   const showmsgUpdate = () => {
     setUpdated(true);
     setTimeout(() => {
       setUpdated(false);
     }, 3000);
   };
-  const onLoad=()=>{
+  const invalid= idDelivery ===0;
+  const onLoad = () => {
     const id = props.match.params.id;
     admin
       .getOneOrder(id)
@@ -74,12 +75,13 @@ const OrderDetail = (props) => {
         });
         setTotal(j);
         setOrder(res.data.order);
-        setIdDelivery(res.data.order.delivery.id);
-        setSelectedStatus(res.data.order.status.id);
-        if(res.data.order.spamChecked>0){
-          setSpamChecked(true)
-        }
 
+        if (res.data.order.delivery != null)
+          setIdDelivery(res.data.order.delivery.id);
+        setSelectedStatus(res.data.order.status.id);
+        if (res.data.order.spamChecked > 0) {
+          setSpamChecked(true);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -93,14 +95,13 @@ const OrderDetail = (props) => {
       .catch((err) => {
         console.log(err);
       });
-      getAllStatus();
-  }
+    getAllStatus();
+  };
   const getAllStatus = async () =>
     await admin.getAllStatus().then((res) => setStatus(res.data.status));
 
   useEffect(() => {
     onLoad();
-    
   }, []);
   const handleOnChangeAddress = async (e) => {
     setAddress(e.target.value);
@@ -116,27 +117,32 @@ const OrderDetail = (props) => {
   const handleOnUpdateStatus = async (e) => {
     e.preventDefault();
     await admin
-      .UpdateOrderStatus(order.order_id, Selectedstatus,message)
+      .UpdateOrderStatus(order.order_id, Selectedstatus, message)
       .then((res) => {
-        textarea.current.value="";
+        textarea.current.value = "";
         AddCurrentStatusToOriginal();
       });
   };
-  const handleOnClickSpam=async e=>{
+  const handleOnClickSpam = async (e) => {
     e.preventDefault();
-    let type="add";
-    let spam_id=0;
+    let type = "add";
+    let spam_id = 0;
     try {
-      if(order.spam[0].id){
-        type="delete";spam_id=order.spam[0].id;
-    }} catch (error) {}
-   
-    await admin.spam(type,order.order_id,order.customer.id,spam_id).then(res=>{
-      onLoad();
-      setSpamChecked(!spamChecked);
-    })
-  }
-  const AddCurrentStatusToOriginal = () => toast.success("Add Current Status To Original");
+      if (order.spam[0].id) {
+        type = "delete";
+        spam_id = order.spam[0].id;
+      }
+    } catch (error) {}
+
+    await admin
+      .spam(type, order.order_id, order.customer.id, spam_id)
+      .then((res) => {
+        onLoad();
+        setSpamChecked(!spamChecked);
+      });
+  };
+  const AddCurrentStatusToOriginal = () =>
+    toast.success("Add Current Status To Original");
   return (
     <React.Fragment>
       <Header icon="fab fa-first-order">Orders</Header>
@@ -211,22 +217,33 @@ const OrderDetail = (props) => {
                           className="form-select mb-3"
                           onChange={(e) => setIdDelivery(e.target.value)}
                         >
-                          {deliveries.map((user) =>
-                            user.id === order.delivery.id ? (
-                              <option selected value={order.delivery.id}>
-                                {order.delivery.name}
-                              </option>
-                            ) : (
-                              <option value={user.id}>{user.name}</option>
-                            )
-                          )}
+                          {deliveries.map((user, i) => {
+                            if (order.delivery != null) {
+                              return user.id === order.delivery.id ? (
+                                <option selected value={order.delivery.id}>
+                                  {order.delivery.name}
+                                </option>
+                              ) : (
+                                <option value={user.id}>{user.name}</option>
+                              );
+                            }
+                            return (
+                              <React.Fragment>
+                                {i === 0 ? (
+                                  <option value="0" disabled selected>Select a delivery</option>
+                                ) : null}
+
+                                <option value={user.id}>{user.name}</option>
+                              </React.Fragment>
+                            );
+                          })}
                         </select>
                         {updated ? (
                           <p className="my-2 text-success">
                             Order updated succefuly
                           </p>
                         ) : null}
-                        <button type="submit" className="btn bg-primary w-100">
+                        <button type="submit" className="btn bg-primary w-100" disabled={invalid}>
                           Submit
                         </button>
 
@@ -283,17 +300,14 @@ const OrderDetail = (props) => {
                     </div>
                   </div>
                   {/* end of row */}
-                
                 </div>
               </div>
               {/* end of card */}
               <Tableau order={order} total={total}></Tableau>
               <div className="card my-3">
-                <div className="card-header">
-                  Orders Journal
-                </div>
+                <div className="card-header">Orders Journal</div>
                 <div className="card-body bg-gray">
-                  <OrdersJournal journals={order.order_journal}/>
+                  <OrdersJournal apply={false} journals={order.order_journal} />
                 </div>
               </div>
             </div>
@@ -323,11 +337,7 @@ const OrderDetail = (props) => {
                       onChange={(e) => setMessage(e.target.value)}
                       ref={textarea}
                     ></textarea>
-                    <button
-                      className="btn bg-primary w-100"     
-                    >
-                      Submit
-                    </button>
+                    <button className="btn bg-primary w-100">Submit</button>
                   </form>
                 </div>
               </div>
@@ -335,23 +345,30 @@ const OrderDetail = (props) => {
               <div className="card mb-2">
                 <div className="card-header bg-white">Order Spam</div>
                 <div className="card-body">
-                  {!spamChecked  ? (
-                    <button className="btn bg-success w-100" onClick={handleOnClickSpam}>Spam</button>
+                  {!spamChecked ? (
+                    <button
+                      className="btn bg-success w-100"
+                      onClick={handleOnClickSpam}
+                    >
+                      Spam
+                    </button>
                   ) : (
-                    <button className="btn bg-danger w-100"  onClick={handleOnClickSpam}>Annule</button>
+                    <button
+                      className="btn bg-danger w-100"
+                      onClick={handleOnClickSpam}
+                    >
+                      Annule
+                    </button>
                   )}
                 </div>
               </div>
-         
+
               {/* end of card */}
             </div>
             {/* end of col */}
           </div>
         ) : null}
       </div>
-      <ToastContainer position="top-center"
-autoClose={5000}
-hideProgressBar={false}/>
     </React.Fragment>
   );
 };
