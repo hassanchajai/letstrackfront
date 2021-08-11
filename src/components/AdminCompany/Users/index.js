@@ -20,18 +20,47 @@ const useStyles = makeStyles((t) => ({
     // justifyContent:"space-around",
     borderBottomLeftRadius: "8px",
     borderBottomRightRadius: "8px",
+
   },
   h4: {
     padding: "30px 0",
     // border:"1px solid black",
     width: "100%",
     textAlign: "center",
+    [t.breakpoints.down(1000)]:{
+      "&:nth-child(1)":{
+        display:"none"
+      },
+      "&:nth-child(3)":{
+display:"none"
+      },
+      "&:nth-child(5)":{
+display:"none"
+      },
+      "&:nth-child(6)":{
+display:"none"
+      }
+    }
   },
   p: {
     padding: "10px",
     textAlign: "center",
     width: "100%",
-    marginBottom:"0!important"
+    marginBottom:"0!important",
+    [t.breakpoints.down(1000)]:{
+      "&:nth-child(1)":{
+        display:"none"
+      },
+      "&:nth-child(3)":{
+display:"none"
+      },
+      "&:nth-child(5)":{
+display:"none"
+      },
+      "&:nth-child(6)":{
+display:"none"
+      }
+    }
     // border:"1px solid black"
   },
 }));

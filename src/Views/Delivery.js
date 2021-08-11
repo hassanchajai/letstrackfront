@@ -1,5 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
+// import withAdminCompany from "../HOC/withAdminCompany";
+import withDelivery from "../HOC/withDeliveryContext";
 // import Sidebar from "../components/Delivery/Sidebar"
 
 const useStyles = makeStyles((t) => ({
@@ -13,6 +15,7 @@ const useStyles = makeStyles((t) => ({
     transition: ".5s",
   },
 }));
+
 function Delivery({children}) {
   const styles = useStyles();
   return (
@@ -25,4 +28,5 @@ function Delivery({children}) {
   );
 }
 
-export default Delivery;
+export default withDelivery(Delivery);
+

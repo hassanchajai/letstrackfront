@@ -19,7 +19,11 @@ const useStyles = makeStyles((t) => ({
     overflow: "hidden",
     width: "7%",
     transition: ".5s",
-    height:"100vh"
+    height:"100vh",
+    [t.breakpoints.down(1000)]:{
+    width: "0",
+
+    }
   },
   logo: {
     width: "100%",

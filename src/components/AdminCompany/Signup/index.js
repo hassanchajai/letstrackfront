@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import Modal from "./Modal";
 import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
 import withAdminCompany from "../../../HOC/withAdminCompany";
+import withAuth from "../../../HOC/withAuth";
 // import bg from '../images/bg.jpg'
 const usestyle = makeStyles((t) => ({
   root: {
@@ -300,4 +301,4 @@ const usestyle = makeStyles((t) => ({
     </div>
   );
 }
-export default withAdminCompany(SignUp)
+export default withAuth(withAdminCompany(SignUp))

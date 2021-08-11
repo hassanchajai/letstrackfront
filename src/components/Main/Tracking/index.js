@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import colors from "../../../Helpers/Colors";
 import "aos/dist/aos.css";
-import { OrdersJournal } from "../../OrdersJournal";
+// import { OrdersJournal } from "../../OrdersJournal";
 import Aos from "aos";
+import UserContext from "../../../DB/User/UserContext";
+import  SearchResultComponent from "./SearchResultComponent";
 
 const useStyles = makeStyles((t) => {
   return {
@@ -24,7 +26,7 @@ const useStyles = makeStyles((t) => {
     listDetailsItem: {
       marginRight: "50px",
       position: "relative",
-      cursor:"pointer",
+      cursor: "pointer",
       "&::before": {
         content: '""',
         position: "absolute",
@@ -32,31 +34,29 @@ const useStyles = makeStyles((t) => {
         left: 0,
         height: 4 + "px",
         width: 0 + "%",
-        transition:".6s",
+        transition: ".6s",
       },
-      "&:hover::before":{
-        width:"100%",
-       
+      "&:hover::before": {
+        width: "100%",
       },
-      "&:nth-child(1)::before":{
-        backgroundColor:"black"
+      "&:nth-child(1)::before": {
+        backgroundColor: "black",
       },
-      "&:nth-child(2)::before":{
-        backgroundColor:"black"
+      "&:nth-child(2)::before": {
+        backgroundColor: "black",
       },
-      "&:nth-child(3)::before":{
-        backgroundColor:colors.primary
+      "&:nth-child(3)::before": {
+        backgroundColor: colors.primary,
       },
-      "&:nth-child(4)::before":{
-        backgroundColor:colors.success
+      "&:nth-child(4)::before": {
+        backgroundColor: colors.success,
       },
-      "&:nth-child(5)::before":{
-        backgroundColor:colors.danger
+      "&:nth-child(5)::before": {
+        backgroundColor: colors.danger,
       },
       [t.breakpoints.down("md")]: {
         marginRight: "20px",
       },
-      
     },
     listDetailsItemTitle: {
       fontSize: "2rem",
@@ -106,9 +106,8 @@ const useStyles = makeStyles((t) => {
       resize: "none",
       padding: "10px 20px",
       fontSize: "1.4rem",
-      backgroundColor:'white',
-      borderRadius:"3px"
-      
+      backgroundColor: "white",
+      borderRadius: "3px",
     },
     iconInput: {
       position: "absolute",
@@ -139,7 +138,7 @@ const useStyles = makeStyles((t) => {
       padding: "40px",
       [t.breakpoints.down(700)]: {
         padding: "10px",
-        borderBottomLeftRadius:"4px",
+        borderBottomLeftRadius: "4px",
         position: "absolute",
         right: "28px",
         maxWidth: "350px",
@@ -158,89 +157,65 @@ const useStyles = makeStyles((t) => {
   };
 });
 function Tracking() {
-  useEffect(()=>{
+  const [searchNumber, setSearchNumber] = useState("");
+  const [searchResult, setSearchResult] = useState(null);
+  const [loading, setLoading] = useState("");
+  // const [status,setStatus]=useState(null);
+  const user = useContext(UserContext);
+  const handleOnSubmitFormSearch = async (e) => {
+    e.preventDefault();
+    setSearchResult({});
+    setLoading(false);
+    await user.search(searchNumber).then((res) => {
+      setSearchResult(res.data);
+      setLoading(true);
+    });
+  };
+  useEffect(() => {
     Aos.init({
       duration: 1000,
     });
-  },[])
+  }, []);
   const styles = useStyles();
   return (
     <div className={styles.root + " row m-0 flex-wrap"}>
       <div className="col-12 col-md-8 py-3">
-        <div className="container-fluid">
-          {/* order status */}
-
-          <ul className={styles.listDetails}>
-            <li className={styles.listDetailsItem}>
-              {/* status title */}
-              <span className={styles.listDetailsItemTitle}>LTS</span>
-              {/* status count */}
-              <span className={styles.listDetailsItemCount}>(3)</span>
-            </li>
-            {/* End of item */}
-            <li className={styles.listDetailsItem}>
-              {/* status title */}
-              <span className={styles.listDetailsItemTitle + ""}>
-                <i className="fas fa-spinner"></i>
-              </span>
-              {/* status count */}
-              <span className={styles.listDetailsItemCount}>(3)</span>
-            </li>
-            {/* End of item */}
-            <li className={styles.listDetailsItem}>
-              {/* status title */}
-              <span className={styles.listDetailsItemTitle + " text-primary"}>
-                <i className="fas fa-exclamation-triangle"></i>
-              </span>
-              {/* status count */}
-              <span className={styles.listDetailsItemCount}>(3)</span>
-            </li>
-            {/* End of item */}
-            <li className={styles.listDetailsItem}>
-              {/* status title */}
-              <span className={styles.listDetailsItemTitle + " text-success"}>
-                <i className="fas fa-check"></i>
-              </span>
-              {/* status count */}
-              <span className={styles.listDetailsItemCount}>(3)</span>
-            </li>
-            {/* End of item */}
-            <li className={styles.listDetailsItem}>
-              {/* status title */}
-              <span className={styles.listDetailsItemTitle + " text-danger"}>
-                <i className="far fa-comment-alt"></i>
-              </span>
-              {/* status count */}
-              <span className={styles.listDetailsItemCount}>(3)</span>
-            </li>
-            {/* End of item */}
-          </ul>
-          {/* end of order status */}
-    <OrdersJournal apply={true} journals={JSON.parse('[{"id":1,"message":"HEY","statu":"Processing","created_at":"2021-08-02T09:11:03.000000Z"},{"id":2,"message":"in process","statu":"Processing","created_at":"2021-08-02T09:14:01.000000Z"},{"id":3,"message":"mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage mEssage","statu":"Processing","created_at":"2021-08-02T09:14:37.000000Z"},{"id":4,"message":"mesag","statu":"Completed","created_at":"2021-08-02T09:53:34.000000Z"}]')}></OrdersJournal>
-          {/* section for details */}
-          <div></div>
-
-          {/*end of section for details */}
-        </div>
+        {searchResult ? (
+          <SearchResultComponent styles={styles} result={searchResult} loading={loading}/>
+        ) : (
+          <div> LTS LET'S TRACK EVERTHING</div>
+        )}
       </div>
-      <div className={styles.secondCol + " col-12 col-md-4 bg-white"} id="search">
-        <form>
+      <div
+        className={styles.secondCol + " col-12 col-md-4 bg-white"}
+        id="search"
+      >
+        <form onSubmit={handleOnSubmitFormSearch}>
           <div className={styles.containerInput}>
             <textarea
               className={styles.inputSearch}
-              minLength="40"
-              placeholder="1. Enter up to 40 tracking numbers, one per line."
+              minLength="10"
+              placeholder="1. Enter up to 10 tracking numbers"
+              value={searchNumber}
+              onChange={(e) => setSearchNumber(e.target.value)}
             />
             <i className={styles.iconInput + " fas fa-trash"}></i>
           </div>
-          <button className={styles.btn}>Submit</button>
+          <button className={styles.btn} type="submit">
+            Submit
+          </button>
         </form>
-        <div className="d-none d-md-block">
-          <p> Information About Company</p>
-          <ul>
-            <li>Name: </li>
-          </ul>
-        </div>
+        {searchResult && searchResult.status &&  searchResult.company ? (
+          <div className="d-none d-md-block">
+            <p> Information About Company</p>
+            <ul>
+              <li>Name: {searchResult.company.name}</li>
+              <li>Address: {searchResult.company.address}</li>
+              <li>Site: {searchResult.company.site}</li>
+              <li>Country: {searchResult.company.country}</li>
+            </ul>
+          </div>
+        ) : null}
       </div>
     </div>
   );

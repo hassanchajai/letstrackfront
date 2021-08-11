@@ -9,8 +9,7 @@ import { OrdersJournal } from "../../../OrdersJournal";
 import Header from "../../Header";
 import { Tableau } from "./Tableau";
 import { toast } from "react-toastify";
-// import 'react-toastify/dist/ReactToastify.css';
-// import {v4 as uuid} from 'uuid'
+
 const useStyles = makeStyles((t) => ({
   retour: {
     height: "40px",
@@ -121,6 +120,7 @@ const OrderDetail = (props) => {
       .then((res) => {
         textarea.current.value = "";
         AddCurrentStatusToOriginal();
+        onLoad();
       });
   };
   const handleOnClickSpam = async (e) => {
@@ -141,8 +141,7 @@ const OrderDetail = (props) => {
         setSpamChecked(!spamChecked);
       });
   };
-  const AddCurrentStatusToOriginal = () =>
-    toast.success("Add Current Status To Original");
+  const AddCurrentStatusToOriginal = () => toast.success("Add Current Status To Original");
   return (
     <React.Fragment>
       <Header icon="fab fa-first-order">Orders</Header>
@@ -156,8 +155,8 @@ const OrderDetail = (props) => {
           <i className="fas fa-arrow-left"></i>
         </div>
         {order ? (
-          <div className="d-flex justify-content-between">
-            <div className="col-8">
+          <div className="d-flex justify-content-between  flex-column-reverse flex-md-row">
+            <div className="col-md-8 col-12">
               {/* begin of card */}
               <div className="card mb-2">
                 <div className="card-body">
@@ -311,7 +310,7 @@ const OrderDetail = (props) => {
                 </div>
               </div>
             </div>
-            <div className="col-4 mx-2 ">
+            <div className="col-md-4 col-12 mx-md-2 mx-0">
               <div className="card mb-2">
                 <div className="card-header bg-white">Order Action</div>
                 <div className="card-body">

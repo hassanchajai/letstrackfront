@@ -13,7 +13,7 @@ const useStyles = makeStyles((t) => {
       padding: 20 + "px",
       backgroundColor: "white",
       boxShadow: "0 2px 6px rgba(0,0,0,.2)",
-      display: "flex",
+      // display: "flex",
       marginTop: "15px",
       flexWrap: "wrap",
       transition: ".5s",

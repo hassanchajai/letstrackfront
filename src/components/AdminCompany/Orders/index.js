@@ -2,9 +2,11 @@
 import { makeStyles } from "@material-ui/core";
 import { useContext, useEffect, useRef, useState } from "react";
 import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
+// import OrderTableauDelivery from "../../Delivery/Orders/OrderTableauDelivery";
 import Header from "../Header";
-// import OrderItem from "./OrderItem";
 import OrderTableau from "./OrderTableau";
+// import OrderItem from "./OrderItem";
+// import OrderTableau from "./OrderTableau";
 const useStyles = makeStyles((t) => ({
   table: {
     width: "100%",
@@ -25,12 +27,14 @@ const useStyles = makeStyles((t) => ({
     // border:"1px solid black",
     width: "100%",
     textAlign: "center",
+
   },
   p: {
     padding: "10px",
     textAlign: "center",
     width: "100%",
     marginBottom: "0!important",
+  
     // border:"1px solid black"
   },
   filtersection: {
@@ -80,7 +84,7 @@ export default function Orders() {
     setloading(false)
     admin.getAllOrders(status,delivery_id,phone,date).then(res=>{
       setOrders(res.data.orders)
-      setCount(res.data.count)
+      setCount(res.data.count) 
     setloading(true)
 
     });
@@ -174,7 +178,7 @@ export default function Orders() {
           <span className="text-blue">{count}</span> Order
         </p>
         <div className="data mt-3">
-          <OrderTableau styles={styles}  orders={orders} loading={loading}/>
+          <OrderTableau  orders={orders} loading={loading}/>
         </div>
         <nav className="mt-3">
           <ul className="pagination pagination-lg">

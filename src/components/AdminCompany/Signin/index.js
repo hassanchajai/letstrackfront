@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
 // import { useEffect } from "react";
 import withAdminCompany from "../../../HOC/withAdminCompany";
+import withAuth from "../../../HOC/withAuth";
 // import bg from '../images/bg.jpg'
 const usestyle = makeStyles((t) => ({
   root: {

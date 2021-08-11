@@ -9,7 +9,7 @@ export const Item = ({ styles, item, apply }) => {
   return (
     <React.Fragment>
       {!apply ? (
-        <li className={styles.listOrderShowItem}>
+        <li className={styles.listOrderShowItem+" journalItem active "+item.statu.replace(" " , "_")}>
           <div className={styles.listOrderShowItemIcon + " bg-" + color}>
             <i className={icon}></i>
           </div>
@@ -27,7 +27,7 @@ export const Item = ({ styles, item, apply }) => {
           </div>
         </li>
       ) : (
-        <li className={styles.listOrderShowItem} data-aos="fade-right">
+        <li className={styles.listOrderShowItem+" journalItem  active "+item.statu.replace(" " , "_")} data-aos="fade-right">
           <div className={styles.listOrderShowItemIcon + " bg-" + color}>
             <i className={icon}></i>
           </div>

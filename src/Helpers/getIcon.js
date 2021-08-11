@@ -2,7 +2,7 @@ export const getIcon=statu=>{
     let icon;
     switch (statu){
         case "Cancelled" :{
-            icon="fas fa-close";
+            icon="fas fa-ban";
             break;
         }
         case "Completed" :{
@@ -10,8 +10,8 @@ export const getIcon=statu=>{
 
             break;
         }
-        case "Call Soon" :{
-            icon="fas fa-home";
+        case "En Delivery" :{
+            icon="fas fa-truck";
             break;
         }
         default:{

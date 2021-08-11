@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react'
-import OrderItem from '../OrderItem'
+// import OrderItem from '../OrderItem'
+import OrderItemDelivery from '../OrderItemDelivery';
 const useStyles = makeStyles ((t) => ({
     table: {
       width: "100%",
@@ -21,36 +22,12 @@ const useStyles = makeStyles ((t) => ({
       // border:"1px solid black",
       width: "100%",
       textAlign: "center",
-      [t.breakpoints.down(1000)]:{
-        "&:nth-child(3)":{
-          display:"none"
-        },
-        "&:nth-child(4)":{
-  display:"none"
-        },
-        "&:nth-child(5)":{
-          display:"none"
-                },
-          
-      }
     },
     p: {
       padding: "10px",
       textAlign: "center",
       width: "100%",
       marginBottom: "0!important",
-      [t.breakpoints.down(1000)]:{
-        "&:nth-child(3)":{
-          display:"none"
-        },
-        "&:nth-child(4)":{
-  display:"none"
-        },
-        "&:nth-child(5)":{
-  display:"none"
-        },
-  
-      }
       // border:"1px solid black"
     },
     filtersection: {
@@ -75,7 +52,7 @@ const useStyles = makeStyles ((t) => ({
     },
   }));
   
- const OrderTableau = ({orders,loading}) => {
+ const OrderTableauDelivery = ({orders,loading}) => {
     //  console.log(orders)
   const styles = useStyles();
 
@@ -90,9 +67,9 @@ const useStyles = makeStyles ((t) => ({
             <h4 className={styles.h4}>Action</h4>
         </div>
 
-     {!orders ? null :  orders.map(order=><OrderItem styles={styles} order={order}  key={order.order_id} loading={loading}/>) } 
+     {!orders ? null :  orders.map(order=><OrderItemDelivery styles={styles} order={order}  key={order.order_id} loading={loading}/>) } 
     
     </div>
     )
 }
-export default OrderTableau
+export default OrderTableauDelivery
