@@ -96,9 +96,9 @@ export default function Integrate() {
       
       <div className={styles.root}>
         {/* content */}
-        <div className="d-flex min-height-100">
+        <div className="d-block d-md-flex min-height-100">
           {/* col 1 */}
-          <div className={"col-3 " + styles.endpoints}>
+          <div className={"col-12 col-md-3 " + styles.endpoints}>
             {/* input search */}
             <div className={styles.inputSearch+" d-none"}>
               <input

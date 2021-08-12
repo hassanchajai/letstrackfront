@@ -50,7 +50,7 @@ const Statistique = ({
               <div
                 className={styles.statistiqueItemDetailIcon + " bg-primary"}
               >
-                <i class="fas fa-download"></i>
+                <i className="fas fa-download"></i>
               </div>
               {/* end icon container */}
             </div>
@@ -174,8 +174,8 @@ const Statistique = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {lastOrders.map((order) => (
-                    <tr>
+                  {lastOrders.map((order,i) => (
+                    <tr key={i}>
                       <td>{order.shipping_address}</td>
                       <td>
                         {" "}

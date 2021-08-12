@@ -121,7 +121,7 @@ npm install axios@latest */
   };
   //   const [Code, setCode] = useState("");
   return (
-    <div className="col-4">
+    <div className="col-12 col-md-4">
       <div className={styles.parametresitem}>
         <div className={styles.header}>
           <h5>

@@ -56,13 +56,12 @@ export default function Dashboard(props) {
         const sidebar=document.querySelector("#sidebar");
         // console.log(sidebar);
         sidebar.classList.toggle("sidebar-active");
+        
     }
   return (
       <React.Fragment>
         {/* content header */}
-        <button className={styles.toggleBtn +" d-block d-md-none"} onClick={handleToggleSidebar}>
-          <i className="fas fa-align-left"></i>
-        </button>
+    
         <div className={styles.header}>
           <p className="m-0">
             <i className={props.icon}></i>

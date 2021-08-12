@@ -14,6 +14,8 @@ class AdminCompanyClass{
     signout=()=> axios.post(this.basename+"/signout",{},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
         
     refresh=() =>axios.post(this.basename+"/refresh",{},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+
+    updateDetail=(obj) =>axios.put(this.basename+"/detail",{...obj},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
         
     // end of authentification
     // dashboard

@@ -91,7 +91,7 @@ const useStyles = makeStyles((t) => ({
                   </NavLink>
                 </li>
                 <li>
-                  <hr class="dropdown-divider" />
+                  <hr className="dropdown-divider" />
                 </li>
                 <li  onClick={doSignOut}>
                   <a className="dropdown-item text-danger">

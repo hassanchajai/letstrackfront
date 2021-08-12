@@ -4,7 +4,7 @@ export const MethodDetail = ({ styles, CurrentMethod,App }) => {
   return (
     <React.Fragment>
       {CurrentMethod ? (
-        <div className={"col-5 " + styles.parametres}>
+        <div className={"col-12 col-md-5 " + styles.parametres}>
           <div className={styles.parametresitem}>
             <div className={styles.header}>
               <div className="d-flex p-2 align-items-center">

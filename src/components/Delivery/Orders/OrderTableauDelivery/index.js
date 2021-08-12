@@ -22,12 +22,36 @@ const useStyles = makeStyles ((t) => ({
       // border:"1px solid black",
       width: "100%",
       textAlign: "center",
+      [t.breakpoints.down(1000)]:{
+        "&:nth-child(3)":{
+          display:"none"
+        },
+        "&:nth-child(4)":{
+  display:"none"
+        },
+        "&:nth-child(5)":{
+          display:"none"
+                },
+          
+      }
     },
     p: {
       padding: "10px",
       textAlign: "center",
       width: "100%",
       marginBottom: "0!important",
+      [t.breakpoints.down(1000)]:{
+        "&:nth-child(3)":{
+          display:"none"
+        },
+        "&:nth-child(4)":{
+  display:"none"
+        },
+        "&:nth-child(5)":{
+          display:"none"
+                },
+          
+      }
       // border:"1px solid black"
     },
     filtersection: {

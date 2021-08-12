@@ -12,8 +12,8 @@ const useStyles = makeStyles((t) => ({
     position: "relative",
     width: "100%",
     transition: ".5s",
-    overflowY:"scroll",
-    height:"100vh"
+    overflowY: "scroll",
+    height: "100vh",
   },
   toggleBtn: {
     backgroundColor: "#242A32",
@@ -22,38 +22,37 @@ const useStyles = makeStyles((t) => ({
     padding: "8px",
     borderRadius: "0% 9% 10% 0% / 10% 10% 10% 10% ",
     fontSize: "1.3rem",
-    display:"none",
-    position:"fixed",
+    display: "none",
+    position: "fixed",
     top: "96px",
     left: "0px",
-    zIndex:"99",
-    [t.breakpoints.down(1000)]:{
-      display:"block"
-    }
+    zIndex: "99",
+    [t.breakpoints.down(1000)]: {
+      display: "block",
+    },
   },
 }));
-function AdminCompany({ children }) {
+function AdminCompany({ children, user }) {
   const styles = useStyles();
-  const handleToggleSidebar=()=>{
-    // const sidebar=document.querySelector("#sidebar");
-    // const sidebar=document.querySelector("#sidebar");
+  const handleToggleSidebar = () => {
     document.querySelector("#sidebar").classList.toggle("sidebar-active");
-   
-   const btn=   document.querySelector(".btn-toggle-sidebar");
-   btn.style.left === "100px" ? btn.style.left = "0": btn.style.left = "100px"
-  //  if(btn.styles.left==="")
-    
-}
+    const btn = document.querySelector(".btn-toggle-sidebar");
+    btn.style.left === "100px"
+      ? (btn.style.left = "0")
+      : (btn.style.left = "100px");
+  };
   return (
-      <div className={styles.root}>
-        <Sidebar />
-        <button className={styles.toggleBtn+" btn-toggle-sidebar" } onClick={handleToggleSidebar}>
-          <i className="fas fa-align-left"></i>
-        </button>
-        <div className={styles.content}>{children}</div>
-      </div>
-   
+    <div className={styles.root}>
+      <Sidebar />
+      <button
+        className={styles.toggleBtn + " btn-toggle-sidebar"}
+        onClick={handleToggleSidebar}
+      >
+        <i className="fas fa-align-left"></i>
+      </button>
+      <div className={styles.content}>{children}</div>
+    </div>
   );
 }
 
-export default withAdminCompany(AdminCompany);
+export default withAdminCompany(withAuth(AdminCompany));

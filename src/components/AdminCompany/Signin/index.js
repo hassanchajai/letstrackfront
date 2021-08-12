@@ -202,4 +202,4 @@ const usestyle = makeStyles((t) => ({
   );
 }
 
-export default withAdminCompany(Signin)
+export default withAdminCompany((Signin))

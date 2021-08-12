@@ -1,7 +1,50 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
+import ProfilContext from "../../../DB/ProfilContext";
 import Header from "../Header";
 
 export default function Profil() {
+  const user=useContext(ProfilContext);
+  const [nameCompany,setNameCompany]=useState("");
+  const [City,setCity]=useState("");
+  const [Country,setCountry]=useState("");
+  const [Site,setSite]=useState("");
+  const [firstname,setfirstname]=useState("");
+  const [lastname,setlastname]=useState("");
+  const [email,setemail]=useState("");
+  // errors
+  const [ErrorsCompanyDetai,setErrorsCompanyDetail]=useState("");
+
+  // end of errors
+  const admin =useContext(AdminCompanyContext);
+
+  useEffect(()=>{
+  if(user.profil){
+    setNameCompany(user.profil.company.name);
+    setCountry(user.profil.company.country)
+    setSite(user.profil.company.site)
+    setCity(user.profil.company.address)
+    // firstname lastname,email
+    setfirstname(user.profil.user.firstname)
+    setlastname(user.profil.user.lastname)
+    setemail(user.profil.user.email)
+  }
+  },[user]);
+ const handleOnSumbitUpdateDetail=e=>{
+  e.preventDefault();
+  admin.updateDetail({
+    nameCompany,City,Country,Site
+  }).then(res=>{
+    if(res.data.status){
+      setErrorsCompanyDetail(res.data.errors)
+      return true;
+    }
+    else{
+      alert(res.data.message);
+    }
+  });
+  }
+
   return (
     <div>
       <Header icon="fab fa-first-order">Orders</Header>
@@ -48,33 +91,67 @@ export default function Profil() {
                     <h5 className="card-title mb-0">Public info</h5>
                   </div>
                   <div className="card-body">
-                    <form>
+                    <form onSubmit={handleOnSumbitUpdateDetail}>
                       <div className="row">
                         <div className="col-md-8">
-                          <div className="mb-3">
-                            <label className="form-label" for="inputUsername">
-                              Username
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="inputUsername"
-                              placeholder="Username"
-                            />
-                          </div>
-                          <div className="mb-3">
-                            <label className="form-label" for="inputUsername">
-                              Biography
-                            </label>
-                            <textarea
-                              rows="2"
-                              className="form-control"
-                              id="inputBio"
-                              placeholder="Tell something about yourself"
-                            ></textarea>
-                          </div>
+                        <div className="mb-3">
+                        <label className="form-label" for="inputAddress">
+                          Name Company
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="inputAddress"
+                          placeholder="1234 Main St"
+                          value={nameCompany}
+                          onChange={e=>setNameCompany(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label" for="inputAddress2">
+                          Country 
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="inputAddress2"
+                          placeholder="Apartment, studio, or floor"
+                          value={Country}
+                          onChange={e=>setCountry(e.target.value)}
+                       
+                      />
+                      </div>
+                      
+                        <div className="mb-3 ">
+                          <label className="form-label" for="inputCity">
+                            City
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="inputCity"
+                            value={City}
+                            onChange={e=>setCity(e.target.value)}
+                         
+                          />
                         </div>
-                        <div className="col-md-4">
+                        <div className="mb-3 ">
+                          <label className="form-label" for="inputState">
+                            Site
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="inputCity"
+                            value={Site}
+                            onChange={e=>setSite(e.target.value)}
+                         
+                          />
+                        </div>
+                    
+                      
+                  </div>
+                        {/* <div className="col-md-4">
                           <div className="text-center">
                             <img
                               alt="Charles Hall"
@@ -91,7 +168,7 @@ export default function Profil() {
                               128px in .jpg format
                             </small>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
 
                       <button type="submit" className="btn bg-primary">
@@ -117,6 +194,9 @@ export default function Profil() {
                             className="form-control"
                             id="inputFirstName"
                             placeholder="First name"
+                            value={firstname}
+                            onChange={e=>setfirstname(e.target.value)}
+                         
                           />
                         </div>
                         <div className="mb-3 col-md-6">
@@ -128,6 +208,8 @@ export default function Profil() {
                             className="form-control"
                             id="inputLastName"
                             placeholder="Last name"
+                            value={lastname}
+                            onChange={e=>setlastname(e.target.value)}
                           />
                         </div>
                       </div>
@@ -140,62 +222,11 @@ export default function Profil() {
                           className="form-control"
                           id="inputEmail4"
                           placeholder="Email"
+                          value={email}
+                            onChange={e=>setemail(e.target.value)}
                         />
                       </div>
-                      <div className="mb-3">
-                        <label className="form-label" for="inputAddress">
-                          Address
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="inputAddress"
-                          placeholder="1234 Main St"
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label className="form-label" for="inputAddress2">
-                          Address 2
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="inputAddress2"
-                          placeholder="Apartment, studio, or floor"
-                        />
-                      </div>
-                      <div className="row">
-                        <div className="mb-3 col-md-6">
-                          <label className="form-label" for="inputCity">
-                            City
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="inputCity"
-                          />
-                        </div>
-                        <div className="mb-3 col-md-4">
-                          <label className="form-label" for="inputState">
-                            State
-                          </label>
-                          <select id="inputState" className="form-control">
-                            <option selected>Choose...</option>
-                            <option>...</option>
-                          </select>
-                        </div>
-                        <div className="mb-3 col-md-2">
-                          <label className="form-label" for="inputZip">
-                            Zip
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="inputZip"
-                          />
-                        </div>
-                      </div>
-                      <button type="submit" className="btn bg-primary">
+                 <button type="submit" className="btn bg-primary">
                         Save changes
                       </button>
                     </form>
@@ -220,9 +251,7 @@ export default function Profil() {
                           className="form-control"
                           id="inputPasswordCurrent"
                         />
-                        <small>
-                          <a href="#">Forgot your password?</a>
-                        </small>
+                       
                       </div>
                       <div className="mb-3">
                         <label className="form-label" for="inputPasswordNew">

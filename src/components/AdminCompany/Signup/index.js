@@ -301,4 +301,4 @@ const usestyle = makeStyles((t) => ({
     </div>
   );
 }
-export default withAuth(withAdminCompany(SignUp))
+export default withAdminCompany(SignUp)
