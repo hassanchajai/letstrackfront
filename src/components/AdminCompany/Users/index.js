@@ -104,7 +104,7 @@ display:"none"
           <div className={styles.table}>
             <div className={styles.tr}>
               <h4 className={styles.h4}>
-                id <i className="fas fa-chevron-down text-danger"></i>
+                id <i className="fas fa-chevron-down text-danger d-none"></i>
               </h4>
               <h4 className={styles.h4}>Name</h4>
               <h4 className={styles.h4}>Email</h4>

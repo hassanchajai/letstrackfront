@@ -2,12 +2,13 @@ import ClipboardJS from "clipboard";
 import hljs from "highlight.js";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { BaseName } from "../../../../DB/config";
 
-const languages = ["Javascript(fetch)", "C#", "Javascript (Axios)"];
+const languages = ["Javascript(fetch)", "Javascript (Axios)"];
 
 export const SnippetCode = ({ styles, CurrentMethod }) => {
   const [languagesAvailaible, SetLanguages] = useState([]);
-  const [Selectedlanguage, setSelectedlanguage] = useState("");
+  const [Selectedlanguage, setSelectedlanguage] = useState(0);
   const [code, SetCode] = useState("");
   const [codeNoHighlight, SetCodeNoHighlight] = useState("");
   useEffect(() => {
@@ -25,7 +26,7 @@ export const SnippetCode = ({ styles, CurrentMethod }) => {
       // language 1
       case "Javascript(fetch)": {
         // add url
-        highlightCode += `fetch('${url}',{
+        highlightCode += `fetch('${BaseName+"methods/"+url}',{
          `;
         highlightCode += `method:'${method}',`;
         // add headers
@@ -70,7 +71,7 @@ npm install axios@latest */
 `;
 
         // add url
-        highlightCode += `axios.post('${url}'
+        highlightCode += `axios.post('${BaseName+"methods/"+url}'
          `;
         // highlightCode += `method:'${method}'`;
         // add headers
@@ -139,7 +140,7 @@ npm install axios@latest */
                 generateCode(e.target.value);
               }}
             >
-              <option value="0" disabled>
+              <option value="0" disabled selected>
                 Selected language
               </option>
               {languagesAvailaible.map((language, i) => (

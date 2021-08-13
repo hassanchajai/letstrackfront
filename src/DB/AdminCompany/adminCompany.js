@@ -16,6 +16,10 @@ class AdminCompanyClass{
     refresh=() =>axios.post(this.basename+"/refresh",{},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
 
     updateDetail=(obj) =>axios.put(this.basename+"/detail",{...obj},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+
+    updateUser=(obj) =>axios.put(this.basename+"/user",{...obj},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
+
+    pwd=(obj) =>axios.put(this.basename+"/pwd",{...obj},{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
         
     // end of authentification
     // dashboard

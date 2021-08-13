@@ -82,7 +82,7 @@ const useStyles = makeStyles ((t) => ({
     return (
         <div className={styles.table}>
         <div className={styles.tr}>
-            <h4 className={styles.h4}>Pickup Time <i className="fas fa-chevron-down text-danger"></i></h4>
+            <h4 className={styles.h4}>Pickup Time <i className="fas fa-chevron-down text-danger d-none"></i></h4>
             <h4 className={styles.h4}>Location</h4>
             <h4 className={styles.h4}>Spam</h4>
             <h4 className={styles.h4}>Order Id</h4>
