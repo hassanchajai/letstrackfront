@@ -285,7 +285,7 @@ const usestyle = makeStyles((t) => ({
           </ul>
           <button
             type="submit"
-            className=" mt-3 btn w-100 p-3 bg-primary "
+            className=" mt-3 btn w-100 p-3 bg-primary d-none"
             onClick={() => {
               togglePlans();
             }}

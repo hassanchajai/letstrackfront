@@ -8,7 +8,7 @@ const SearchResultComponent = ({ styles,result }) => {
 
   return (
       <React.Fragment>
-    { result.status ? <Result journal={result.order_journal} styles={styles} />  : <MessageError msg={result.message} /> }      
+    { result.status ? <Result journal={result.order_journal} styles={styles} />  : <MessageError styles={styles} msg={result.message} /> }      
       </React.Fragment>
 
     );

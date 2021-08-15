@@ -74,6 +74,7 @@ export default function Orders() {
   const [phone,setPhone] = useState([]);
   // end of selected inputs
   const [count,setCount] = useState(null);
+  const [pages,setPages] = useState(null);
   const [perPage,setPerPage] = useState(5);
   const handleOnClickFilter = () => {
     const a = (b) => (filter.current.style.height = b),c = filter.current.style.height === "100%";
@@ -95,6 +96,7 @@ export default function Orders() {
     getOrders();
     admin.getAllUsers().then(res=>{setDeliveries(res.data.users)});
     admin.getAllStatus().then(res=>{setStatus(res.data.status)});
+    setPages(Math.ceil(count/perPage));
     // console.log(status);
   },[])
   return (
@@ -178,26 +180,16 @@ export default function Orders() {
           <span className="text-blue">{count}</span> Order
         </p>
         <div className="data mt-3">
-          <OrderTableau  orders={orders} loading={loading}/>
+          <OrderTableau count={count}  orders={orders}  loading={loading}/>
         </div>
         <nav className="mt-3">
           <ul className="pagination pagination-lg">
-            <li className="page-item active" aria-current="page">
-              <a className="page-link">1</a>
-            </li>
-            <li className="page-item">
-              <a className="page-link" href="#">
-                2
-              </a>
-            </li>
-            <li className="page-item">
-              <a className="page-link" href="#">
-                3
-              </a>
-            </li>
+
+       
+        
           </ul>
         </nav>
-      </div>
+     </div> 
     </div>
   );
 }

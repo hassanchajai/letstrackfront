@@ -154,6 +154,21 @@ const useStyles = makeStyles((t) => {
         },
       },
     },
+    logoContainer:{
+      display:"flex",
+      justifyContent:"center",
+      alignItems:"center",
+      flexDirection:"column",
+      minHeight:"calc( 100vh - 118px )"
+    },
+    logoContainerH3:{
+      color:colors.primary,
+      fontSize:"3rem"
+    },
+    logoContainerP:{
+      fontSize:"2rem"
+      
+    }
   };
 });
 function Tracking() {
@@ -183,7 +198,7 @@ function Tracking() {
         {searchResult ? (
           <SearchResultComponent styles={styles} result={searchResult} loading={loading}/>
         ) : (
-          <div> LTS LET'S TRACK EVERTHING</div>
+          <div className={styles.logoContainer}> <h3 className={styles.logoContainerH3}>LTS</h3> <p className={styles.logoContainerP}>LET'S TRACK EVERTHING</p></div>
         )}
       </div>
       <div

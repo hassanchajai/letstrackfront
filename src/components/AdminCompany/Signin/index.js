@@ -21,9 +21,9 @@ const usestyle = makeStyles((t) => ({
   },
   signin: {
     width: "40%",
-    marginTop: "120px",
+    // marginTop: "180px",
     display: "flex",
-    //   justifyContent:"center",
+      justifyContent:"center",
     alignItems: "center",
     flexDirection: "column",
     textAlign: "center",
@@ -149,17 +149,7 @@ const usestyle = makeStyles((t) => ({
             
 
           </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="flexCheckDefault"
-            />
-            <label className="form-check-label mb-3" for="flexCheckDefault">
-              Remmeber me for 2 weeks
-            </label>
-          </div>
+       
           {err ? (
             <p className="text-danger" style={{ fontSize: "1rem" }}>
               {err}
@@ -173,9 +163,6 @@ const usestyle = makeStyles((t) => ({
           >
             Submit
           </button>
-          <button type="button" className={styles.link}>
-            Forgot password ?
-          </button>
         </form>
       </div>
       {/* details */}
@@ -187,10 +174,8 @@ const usestyle = makeStyles((t) => ({
             {/* <p className="text-primary">Free !</p> */}
           </div>
           <p className="lead">
-            Discover The Steps Your Visitors Take Before They Submit Your Forms,
-            Without All The Complicated Analytics. With Our New User Journey
-            Addon You Can Easily See The Content That’s Driving The Most
-            Valuable Form Conversions, Right In Your Wordpress Dashboard.
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo soluta numquam incidunt suscipit molestiae expedita atque, nesciunt sint temporibus iste, culpa quas? Explicabo, earum rem!
+
           </p>
           <button type="submit" className=" mt-3 btn w-100 p-3 bg-primary ">
             Learn more

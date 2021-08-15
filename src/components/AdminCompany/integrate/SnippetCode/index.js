@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { BaseName } from "../../../../DB/config";
 
-const languages = ["Javascript(fetch)", "Javascript (Axios)"];
+const languages = ["Javascript(fetch)",  "Javascript (Axios)"];
 
 export const SnippetCode = ({ styles, CurrentMethod }) => {
   const [languagesAvailaible, SetLanguages] = useState([]);
@@ -17,6 +17,7 @@ export const SnippetCode = ({ styles, CurrentMethod }) => {
       SetLanguages(languages);
       generateCode(Selectedlanguage);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [CurrentMethod, Selectedlanguage]);
   // const notify = (str) => toast.success(str);
   const generateCode = (lang) => {
@@ -137,7 +138,7 @@ npm install axios@latest */
               value={Selectedlanguage}
               onChange={(e) => {
                 setSelectedlanguage(e.target.value);
-                generateCode(e.target.value);
+                // generateCode(e.target.value);
               }}
             >
               <option value="0" disabled selected>
