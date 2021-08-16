@@ -6,6 +6,7 @@ import AdminCompanyContext from "../../../../../../DB/AdminCompany/AdminCompanyC
 import colors from "../../../../../../Helpers/Colors";
 import { v4 as uid } from "uuid";
 import { getBadge } from "../../../../../../Helpers/getBadge";
+import { toast } from "react-toastify";
 const useStyles = makeStyles((t) => ({
   statistique: {
     display: "flex",
@@ -52,7 +53,8 @@ const Details = ({ open, user, statistique, history }) => {
     await admin
       .refreshUid(user.id, uid())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
+        toast.success("the uid refreshed!")
       })
       .catch((err) => {
         console.log(err)

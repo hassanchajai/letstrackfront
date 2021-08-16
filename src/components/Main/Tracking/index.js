@@ -214,7 +214,9 @@ function Tracking() {
               value={searchNumber}
               onChange={(e) => setSearchNumber(e.target.value)}
             />
-            <i className={styles.iconInput + " fas fa-trash"}></i>
+            <i className={styles.iconInput + " fas fa-trash"} onClick={()=>{
+              setSearchNumber(""); setSearchResult(null)
+            }}></i>
           </div>
           <button className={styles.btn} type="submit">
             Submit

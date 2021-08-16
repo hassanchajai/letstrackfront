@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { makeStyles } from "@material-ui/core";
 import format from "date-fns/format";
 import React, { useContext, useEffect, useState } from "react";
@@ -24,7 +25,7 @@ const useStyles = makeStyles((t) => ({
     fontSize: "1rem",
   },
 }));
-export const OrdersDeliveryDetail = ({ match }) => {
+export const OrdersDeliveryDetail = ({ match,history }) => {
   const styles = useStyles();
   const delivery = useContext(DeliveryContext);
   const [order, setOrder] = useState(null);
@@ -58,19 +59,20 @@ export const OrdersDeliveryDetail = ({ match }) => {
   };
   useEffect(() => {
     onload();
+    
   }, []);
   return (
     <React.Fragment>
       <Header icon="fab fa-first-order">Orders</Header>
       <div className="py-4 px-3">
-        {/* <div
+        <div
             className={styles.retour}
             onClick={() => {
-              props.history.push("/company/orders");
+              history.push("/delivery/"+match.params.uid);
             }}
           >
             <i className="fas fa-arrow-left"></i>
-          </div> */}
+          </div>
 
         {order ? (
           <div className="d-flex justify-content-between">

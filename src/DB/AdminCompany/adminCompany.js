@@ -7,7 +7,7 @@ class AdminCompanyClass{
     // Authentification
     login=(email,password)=>axios.post(this.basename+"/login",{email,password})
     
-    register=(email,password,firstname,lastname,logo,pack_id)=>axios.post(this.basename+"/register",{email,password,firstname,lastname,logo,pack_id})
+    register=(email,password,firstname,lastname,logo,pack_id,city,country,site)=>axios.post(this.basename+"/register",{email,password,firstname,lastname,logo,pack_id,city,country,site})
     
     profil=()=>axios.get(this.basename+"/profil",{headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
 

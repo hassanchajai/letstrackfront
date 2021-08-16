@@ -154,7 +154,7 @@ export default function Profil() {
                               type="text"
                               className="form-control"
                               id="inputAddress"
-                              placeholder="1234 Main St"
+                              
                               value={nameCompany}
                               onChange={(e) => setNameCompany(e.target.value)}
                             />
@@ -175,7 +175,7 @@ export default function Profil() {
                               type="text"
                               className="form-control"
                               id="inputAddress2"
-                              placeholder="Apartment, studio, or floor"
+                             
                               value={Country}
                               onChange={(e) => setCountry(e.target.value)}
                             />

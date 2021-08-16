@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import Modal from "./Modal";
 import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
 import withAdminCompany from "../../../HOC/withAdminCompany";
-import withAuth from "../../../HOC/withAuth";
+// import withAuth from "../../../HOC/withAuth";
 // import bg from '../images/bg.jpg'
 const usestyle = makeStyles((t) => ({
   root: {
@@ -78,13 +78,18 @@ const usestyle = makeStyles((t) => ({
   },
 }));
  function SignUp(props) {
+   useEffect(()=>{
+    if(localStorage.getItem("token")){
+      props.history.push("/company/dash")
+    }
+   },[])
   const admin = useContext(AdminCompanyContext);
   // for selected plans
   const [plans, setPlans] = useState([
     {
       id: 0,
       title: "Lite Licence",
-      price: 0,
+      price: 0, 
       Features: [
         "1 User",
         "Unlimited Requests",
@@ -126,6 +131,11 @@ const usestyle = makeStyles((t) => ({
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
+
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [site, setSite] = useState("");
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState(null);
   // check if inputs are valid
@@ -133,7 +143,10 @@ const usestyle = makeStyles((t) => ({
     confirmPassword !== password ||
     email === "" ||
     firstname === "" ||
-    lastname === "";
+    lastname === "" ||
+    city === ""  ||
+    site === "" ||
+    country === "" ;
   // end of inputs
   const [showmodal, toogleModal] = useState(false);
 
@@ -148,7 +161,7 @@ const usestyle = makeStyles((t) => ({
     e.preventDefault();
 
     admin
-      .register(email, password, firstname, lastname, "logo", SelectedPlan + 1)
+      .register(email, password, firstname, lastname, "logo", SelectedPlan + 1,city,country,site)
       .then((res) => {
         // console.log(res);
         if(!res.data.errors){
@@ -225,6 +238,54 @@ const usestyle = makeStyles((t) => ({
           </div>
           {!(errors && errors.email) ? null : (
               <div className="text-danger my-3">{errors.email}</div>
+            )}
+          <div className="mb-3 ">
+            <label for="exampleFormControlInput1" className="form-label">
+              Site
+            </label>
+            <input
+              value={site}
+              type="text"
+              className="form-control px-2 py-3 "
+              id="exampleFormControlInput1"
+              placeholder="site"
+              onChange={(e) => setSite(e.target.value)}
+            />
+          </div>
+          {!(errors && errors.site) ? null : (
+              <div className="text-danger my-3">{errors.site}</div>
+            )}
+          <div className="mb-3 ">
+            <label for="exampleFormControlInput1" className="form-label">
+              Country
+            </label>
+            <input
+              value={country}
+              type="text"
+              className="form-control px-2 py-3 "
+              id="exampleFormControlInput1"
+              placeholder="country"
+              onChange={(e) => setCountry(e.target.value)}
+            />
+          </div>
+          {!(errors && errors.country) ? null : (
+              <div className="text-danger my-3">{errors.country}</div>
+            )}
+          <div className="mb-3 ">
+            <label for="exampleFormControlInput1" className="form-label">
+              City
+            </label>
+            <input
+              value={city}
+              type="text"
+              className="form-control px-2 py-3 "
+              id="exampleFormControlInput1"
+              placeholder="city"
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+          {!(errors && errors.city) ? null : (
+              <div className="text-danger my-3">{errors.city}</div>
             )}
           <div className="mb-3">
             <label for="exampleFormControlInput1" className="form-label">

@@ -160,10 +160,10 @@ const OrderDetail = (props) => {
               {/* begin of card */}
               <div className="card mb-2">
                 <div className="card-body">
-                  <h4>Orders #32341</h4>
+                <h4>Orders <span className="text-blue">#{order.number}</span></h4>
                   <p>
                     Passed on {format(new Date(order.created_at), "MM/dd/yyyy")}
-                    . Customer IP: 127.0.0.1
+                    . Customer IP:  {order.ip}
                   </p>
                   <div className="row mt-5">
                     <div className="col-4">

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import AdminCompanyContext from "../../../DB/AdminCompany/AdminCompanyContext";
@@ -27,6 +27,7 @@ const usestyle = makeStyles((t) => ({
     alignItems: "center",
     flexDirection: "column",
     textAlign: "center",
+    height:"100vh",
     [t.breakpoints.down(500)]: {
       width: "100%",
     },
@@ -81,6 +82,11 @@ const usestyle = makeStyles((t) => ({
 }));
 
  function Signin(props) {
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      props.history.push("/company/dash")
+    }
+   },[])
   const styles = usestyle();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
